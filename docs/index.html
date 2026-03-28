@@ -1313,11 +1313,8 @@
       const webDiv = document.getElementById("merchantWebResults");
 
       // Fetch web recommendations in background
-      webDiv.innerHTML = `<div style="background:white;border-radius:12px;padding:1.2rem;box-shadow:0 2px 8px rgba(0,0,0,0.06);">
-        <h3 style="margin-bottom:0.5rem;">網路推薦</h3>
-        <p style="color:#888;font-size:0.9rem;">正在搜尋網路上的最佳卡片推薦...</p>
-      </div>`;
-      fetchMerchantWeb(query);
+      // Web search only works with local server, skip on static hosting
+      webDiv.innerHTML = "";
 
       // Find matching merchant
       let match = null;
