@@ -836,18 +836,12 @@
     };
 
     async function loadData() {
-      // GitHub Pages: data embedded inline (no server needed)
-      try {
-        const [cardsResp, rewardsResp] = await Promise.all([
-          fetch("data/cards.json"),
-          fetch("data/rewards.json")
-        ]);
-        cardsData = await cardsResp.json();
-        rewardsData = await rewardsResp.json();
-      } catch(e) {
-        // Fallback: use inline data if fetch fails
-        console.log("Using inline data");
-      }
+      const [cardsResp, rewardsResp] = await Promise.all([
+        fetch("/data/cards.json"),
+        fetch("/data/rewards.json")
+      ]);
+      cardsData = await cardsResp.json();
+      rewardsData = await rewardsResp.json();
 
       document.getElementById("lastUpdated").textContent =
         `最後更新：${rewardsData.lastUpdated}`;
@@ -1318,8 +1312,11 @@
       const rankingDiv = document.getElementById("merchantRanking");
       const webDiv = document.getElementById("merchantWebResults");
 
-      // Fetch web recommendations in background (only works with local server)
-      webDiv.innerHTML = "";
+      // Fetch web recommendations in background
+      webDiv.innerHTML = `<div style="background:white;border-radius:12px;padding:1.2rem;box-shadow:0 2px 8px rgba(0,0,0,0.06);">
+        <h3 style="margin-bottom:0.5rem;">網路推薦</h3>
+        <p style="color:#888;font-size:0.9rem;">正在搜尋網路上的最佳卡片推薦...</p>
+      </div>`;
       fetchMerchantWeb(query);
 
       // Find matching merchant
@@ -1528,6 +1525,8 @@
       "富邦Costco": { bank: "富邦銀行", name: "Costco聯名卡", network: "Mastercard", overseasRate: 5, domesticRate: 1, foreignFee: 1.5, note: "Costco賣場最高2%，海外實體5%", url: "https://www.fubon.com/banking/personal/credit_card/all_cards/all_cards.htm" },
       "聯邦賴點卡": { bank: "聯邦銀行", name: "賴點卡", network: "JCB", overseasRate: 2, domesticRate: 2, foreignFee: 1.5, note: "國內外2% LINE Points，日本3.5%", url: "https://card.ubot.com.tw/" },
       "賴點卡": { bank: "聯邦銀行", name: "賴點卡", network: "JCB", overseasRate: 2, domesticRate: 2, foreignFee: 1.5, note: "國內外2% LINE Points，日本3.5%", url: "https://card.ubot.com.tw/" },
+      "聯邦綠卡": { bank: "聯邦銀行", name: "綠卡", network: "Visa", overseasRate: 3, domesticRate: 2, foreignFee: 1.5, note: "海外3%，國內綠色消費2%", url: "https://card.ubot.com.tw/" },
+      "綠卡": { bank: "聯邦銀行", name: "綠卡", network: "Visa", overseasRate: 3, domesticRate: 2, foreignFee: 1.5, note: "海外3%，國內綠色消費2%", url: "https://card.ubot.com.tw/" },
       "匯豐旅人卡": { bank: "匯豐銀行", name: "旅人卡", network: "Visa", overseasRate: 2.22, domesticRate: 1.22, foreignFee: 1.5, note: "海外2.22%，自動回饋無需登錄", url: "https://www.hsbc.com.tw/credit-cards/" },
       "星展飛行卡": { bank: "星展銀行", name: "飛行卡", network: "Visa", overseasRate: 2.5, domesticRate: 1.2, foreignFee: 1.5, note: "海外2.5%，可累積哩程", url: "https://www.dbs.com.tw/personal-zh/cards/credit-cards.page" },
       "富邦OpenLife": { bank: "富邦銀行", name: "OpenLife卡", network: "Visa", overseasRate: 2, domesticRate: 2, foreignFee: 1.5, note: "國內外2%", url: "https://www.fubon.com/banking/personal/credit_card/all_cards/all_cards.htm" },
@@ -1616,23 +1615,15 @@
           }
         }
 
-        // If not found in curated DB, try server API (local only) or show manual input prompt
+        // If not found in curated DB, search the web
         if (!data) {
-          try {
-            status.textContent = "內建資料庫無此卡片，正在搜尋...";
-            const resp = await fetch(`/api/search?q=${encodeURIComponent(query)}`);
-            data = await resp.json();
-            if (data.bank && BANK_URLS[data.bank]) {
-              data._bankUrl = BANK_URLS[data.bank];
-            }
-          } catch(e) {
-            // No server available (GitHub Pages) - parse bank from query and show manual input
-            const bankKw = {"中信":"中國信託","玉山":"玉山銀行","國泰":"國泰世華","台新":"台新銀行","富邦":"富邦銀行","永豐":"永豐銀行","聯邦":"聯邦銀行","星展":"星展銀行","匯豐":"匯豐銀行","樂天":"樂天銀行","新光":"新光銀行","元大":"元大銀行","凱基":"凱基銀行"};
-            let bank = "", name = query;
-            for (const [kw, bk] of Object.entries(bankKw)) {
-              if (query.includes(kw)) { bank = bk; name = query.replace(kw,"").replace("銀行","").replace("信用卡","").trim(); break; }
-            }
-            data = { bank, name: name || query, network: "Visa", overseasRate: 0, domesticRate: 0, foreignFee: 1.5, rawTexts: [], _bankUrl: BANK_URLS[bank] || "" };
+          status.textContent = "內建資料庫無此卡片，正在搜尋官網...";
+          const resp = await fetch(`/api/search?q=${encodeURIComponent(query)}`);
+          data = await resp.json();
+
+          // Try to find bank URL for "前往官網確認" button
+          if (data.bank && BANK_URLS[data.bank]) {
+            data._bankUrl = BANK_URLS[data.bank];
           }
         }
 
