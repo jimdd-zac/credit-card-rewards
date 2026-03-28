@@ -1508,55 +1508,99 @@
     let lastSearchResult = null;
 
     // Curated popular cards database (updated by scraper weekly, fallback if web search fails)
-    const POPULAR_CARDS = {
-      "樂天信用卡": { bank: "樂天銀行", name: "樂天信用卡", network: "JCB", overseasRate: 3, domesticRate: 1.22, foreignFee: 1.5, note: "日本消費最高5%，海外3%", url: "https://card.rakuten.com.tw/" },
-      "樂天": { bank: "樂天銀行", name: "樂天信用卡", network: "JCB", overseasRate: 3, domesticRate: 1.22, foreignFee: 1.5, note: "日本消費最高5%，海外3%", url: "https://card.rakuten.com.tw/" },
-      "國泰CUBE": { bank: "國泰世華", name: "CUBE卡", network: "Mastercard", overseasRate: 3, domesticRate: 1, foreignFee: 1.5, note: "精選任務日韓3%，需App選任務", url: "https://www.cathaybk.com.tw/cathaybk/personal/product/credit-card/cards/cube/" },
-      "CUBE卡": { bank: "國泰世華", name: "CUBE卡", network: "Mastercard", overseasRate: 3, domesticRate: 1, foreignFee: 1.5, note: "精選任務日韓3%，需App選任務", url: "https://www.cathaybk.com.tw/cathaybk/personal/product/credit-card/cards/cube/" },
-      "玉山U Bear": { bank: "玉山銀行", name: "U Bear信用卡", network: "Mastercard", overseasRate: 3, domesticRate: 1, foreignFee: 1.5, note: "網購/行動支付最高10%，海外3%", url: "https://www.esunbank.com.tw/bank/personal/credit-card" },
-      "U Bear": { bank: "玉山銀行", name: "U Bear信用卡", network: "Mastercard", overseasRate: 3, domesticRate: 1, foreignFee: 1.5, note: "網購/行動支付最高10%，海外3%", url: "https://www.esunbank.com.tw/bank/personal/credit-card" },
-      "台新GoGo": { bank: "台新銀行", name: "GoGo卡", network: "Visa", overseasRate: 2.8, domesticRate: 0.5, foreignFee: 1.5, note: "數位通路/行動支付3.8%，海外2.8%", url: "https://www.taishinbank.com.tw/" },
-      "GoGo卡": { bank: "台新銀行", name: "GoGo卡", network: "Visa", overseasRate: 2.8, domesticRate: 0.5, foreignFee: 1.5, note: "數位通路/行動支付3.8%，海外2.8%", url: "https://www.taishinbank.com.tw/" },
-      "台新FLY": { bank: "台新銀行", name: "@GOGO FLY卡", network: "JCB", overseasRate: 3, domesticRate: 1, foreignFee: 1.5, note: "日韓最高6%，其他海外3%", url: "https://www.taishinbank.com.tw/" },
-      "中信Flygo": { bank: "中國信託", name: "Flygo飛狗卡", network: "Visa", overseasRate: 2.8, domesticRate: 1, foreignFee: 1.5, note: "全球海外2.8%，需登錄", url: "https://www.ctbcbank.com/twrbo/zh_tw/index/card-credit/card-credit.html" },
-      "飛狗卡": { bank: "中國信託", name: "Flygo飛狗卡", network: "Visa", overseasRate: 2.8, domesticRate: 1, foreignFee: 1.5, note: "全球海外2.8%，需登錄", url: "https://www.ctbcbank.com/twrbo/zh_tw/index/card-credit/card-credit.html" },
-      "永豐DAWHO": { bank: "永豐銀行", name: "DAWHO大戶卡", network: "Mastercard", overseasRate: 3, domesticRate: 3, foreignFee: 1.5, note: "大戶等級享國內外3%", url: "https://bank.sinopac.com/sinopacBT/personal/credit-card/introduction/DAWHO.html" },
-      "大戶卡": { bank: "永豐銀行", name: "DAWHO大戶卡", network: "Mastercard", overseasRate: 3, domesticRate: 3, foreignFee: 1.5, note: "大戶等級享國內外3%", url: "https://bank.sinopac.com/sinopacBT/personal/credit-card/introduction/DAWHO.html" },
-      "富邦Costco": { bank: "富邦銀行", name: "Costco聯名卡", network: "Mastercard", overseasRate: 5, domesticRate: 1, foreignFee: 1.5, note: "Costco賣場最高2%，海外實體5%", url: "https://www.fubon.com/banking/personal/credit_card/all_cards/all_cards.htm" },
-      "聯邦賴點卡": { bank: "聯邦銀行", name: "賴點卡", network: "JCB", overseasRate: 2, domesticRate: 2, foreignFee: 1.5, note: "國內外2% LINE Points，日本3.5%", url: "https://card.ubot.com.tw/" },
-      "賴點卡": { bank: "聯邦銀行", name: "賴點卡", network: "JCB", overseasRate: 2, domesticRate: 2, foreignFee: 1.5, note: "國內外2% LINE Points，日本3.5%", url: "https://card.ubot.com.tw/" },
-      "聯邦綠卡": { bank: "聯邦銀行", name: "綠卡", network: "Visa", overseasRate: 3, domesticRate: 2, foreignFee: 1.5, note: "海外3%，國內綠色消費2%", url: "https://card.ubot.com.tw/" },
-      "綠卡": { bank: "聯邦銀行", name: "綠卡", network: "Visa", overseasRate: 3, domesticRate: 2, foreignFee: 1.5, note: "海外3%，國內綠色消費2%", url: "https://card.ubot.com.tw/" },
-      "匯豐旅人卡": { bank: "匯豐銀行", name: "旅人卡", network: "Visa", overseasRate: 2.22, domesticRate: 1.22, foreignFee: 1.5, note: "海外2.22%，自動回饋無需登錄", url: "https://www.hsbc.com.tw/credit-cards/" },
-      "星展飛行卡": { bank: "星展銀行", name: "飛行卡", network: "Visa", overseasRate: 2.5, domesticRate: 1.2, foreignFee: 1.5, note: "海外2.5%，可累積哩程", url: "https://www.dbs.com.tw/personal-zh/cards/credit-cards.page" },
-      "富邦OpenLife": { bank: "富邦銀行", name: "OpenLife卡", network: "Visa", overseasRate: 2, domesticRate: 2, foreignFee: 1.5, note: "國內外2%", url: "https://www.fubon.com/banking/personal/credit_card/all_cards/all_cards.htm" },
-      "momo聯名卡": { bank: "富邦銀行", name: "momo聯名卡", network: "Mastercard", overseasRate: 5, domesticRate: 3, foreignFee: 1.5, note: "momo站內3~7%，海外實體/旅遊最高5%", url: "https://www.fubon.com/banking/personal/credit_card/all_cards/all_cards.htm" },
-      "新光悠遊": { bank: "新光銀行", name: "悠遊聯名卡", network: "Visa", overseasRate: 1, domesticRate: 1, foreignFee: 1.5, note: "一般消費1%", url: "https://www.skbank.com.tw/credit_card" },
-      "元大鑽金卡": { bank: "元大銀行", name: "鑽金卡", network: "Visa", overseasRate: 3, domesticRate: 1.2, foreignFee: 1.5, note: "海外3%，國內1.2%", url: "https://www.yuantabank.com.tw/bank/credit-card/" },
-      "凱基魔BUY": { bank: "凱基銀行", name: "魔BUY卡", network: "Mastercard", overseasRate: 3, domesticRate: 1.2, foreignFee: 1.5, note: "海外3%，指定通路加碼", url: "https://www.kgibank.com/personal/card/credit" },
-      // 玉山系列
-      "玉山Only": { bank: "玉山銀行", name: "Only卡", network: "Visa", overseasRate: 1.2, domesticRate: 1.2, foreignFee: 1.5, note: "國內外1.2%無腦刷", url: "https://www.esunbank.com.tw/bank/personal/credit-card" },
-      "Only卡": { bank: "玉山銀行", name: "Only卡", network: "Visa", overseasRate: 1.2, domesticRate: 1.2, foreignFee: 1.5, note: "國內外1.2%無腦刷", url: "https://www.esunbank.com.tw/bank/personal/credit-card" },
-      "玉山Pi": { bank: "玉山銀行", name: "Pi拍錢包信用卡", network: "Visa", overseasRate: 2.5, domesticRate: 2.5, foreignFee: 1.5, note: "P幣2.5%回饋", url: "https://www.esunbank.com.tw/bank/personal/credit-card" },
-      "Pi拍錢包": { bank: "玉山銀行", name: "Pi拍錢包信用卡", network: "Visa", overseasRate: 2.5, domesticRate: 2.5, foreignFee: 1.5, note: "P幣2.5%回饋", url: "https://www.esunbank.com.tw/bank/personal/credit-card" },
-      "玉山藥師": { bank: "玉山銀行", name: "藥師公會聯名卡", network: "Visa", overseasRate: 1.2, domesticRate: 1.2, foreignFee: 1.5, note: "藥師公會聯名，一般消費約1.2%", url: "https://www.esunbank.com.tw/bank/personal/credit-card" },
-      "藥師玉山": { bank: "玉山銀行", name: "藥師公會聯名卡", network: "Visa", overseasRate: 1.2, domesticRate: 1.2, foreignFee: 1.5, note: "藥師公會聯名，一般消費約1.2%", url: "https://www.esunbank.com.tw/bank/personal/credit-card" },
-      "藥師卡": { bank: "玉山銀行", name: "藥師公會聯名卡", network: "Visa", overseasRate: 1.2, domesticRate: 1.2, foreignFee: 1.5, note: "藥師公會聯名，一般消費約1.2%", url: "https://www.esunbank.com.tw/bank/personal/credit-card" },
-      // 中信系列
-      "中信LINE Pay": { bank: "中國信託", name: "LINE Pay卡", network: "Visa", overseasRate: 1, domesticRate: 1, foreignFee: 1.5, note: "LINE Pay消費最高3%", url: "https://www.ctbcbank.com/twrbo/zh_tw/index/card-credit/card-credit.html" },
-      "LINE Pay卡": { bank: "中國信託", name: "LINE Pay卡", network: "Visa", overseasRate: 1, domesticRate: 1, foreignFee: 1.5, note: "LINE Pay消費最高3%", url: "https://www.ctbcbank.com/twrbo/zh_tw/index/card-credit/card-credit.html" },
-      "中信現金回饋": { bank: "中國信託", name: "現金回饋御璽卡", network: "Visa", overseasRate: 2, domesticRate: 0.5, foreignFee: 1.5, note: "海外2%，國內0.5%", url: "https://www.ctbcbank.com/twrbo/zh_tw/index/card-credit/card-credit.html" },
-      // 國泰系列
-      "國泰Costco": { bank: "國泰世華", name: "Costco聯名卡", network: "Mastercard", overseasRate: 2, domesticRate: 1, foreignFee: 1.5, note: "Costco消費3%，海外2%", url: "https://www.cathaybk.com.tw/cathaybk/personal/product/credit-card/cards/costco/" },
-      "國泰世華現金回饋": { bank: "國泰世華", name: "現金回饋御璽卡", network: "Mastercard", overseasRate: 1.5, domesticRate: 0.5, foreignFee: 1.5, note: "海外1.5%，國內0.5%", url: "https://www.cathaybk.com.tw/cathaybk/personal/product/credit-card/cards/" },
-      // 台新系列
-      "台新Richart": { bank: "台新銀行", name: "Richart FlyGo卡", network: "Visa", overseasRate: 2.8, domesticRate: 0.5, foreignFee: 1.5, note: "海外2.8%", url: "https://www.taishinbank.com.tw/" },
-      // 永豐系列
-      "永豐Sport": { bank: "永豐銀行", name: "Sport卡", network: "Mastercard", overseasRate: 2, domesticRate: 2, foreignFee: 1.5, note: "國內外2%，指定通路3%", url: "https://bank.sinopac.com/sinopacBT/personal/credit-card/overview.html" },
-      "Sport卡": { bank: "永豐銀行", name: "Sport卡", network: "Mastercard", overseasRate: 2, domesticRate: 2, foreignFee: 1.5, note: "國內外2%，指定通路3%", url: "https://bank.sinopac.com/sinopacBT/personal/credit-card/overview.html" },
-      "永豐幣倍卡": { bank: "永豐銀行", name: "幣倍卡", network: "Mastercard", overseasRate: 3, domesticRate: 2, foreignFee: 1.5, note: "海外3%，國內行動支付2%", url: "https://bank.sinopac.com/sinopacBT/personal/credit-card/overview.html" },
-      "幣倍卡": { bank: "永豐銀行", name: "幣倍卡", network: "Mastercard", overseasRate: 3, domesticRate: 2, foreignFee: 1.5, note: "海外3%，國內行動支付2%", url: "https://bank.sinopac.com/sinopacBT/personal/credit-card/overview.html" },
-    };
+    // Helper to make card entry
+    function C(bank, name, network, overseas, domestic, fee, note, url) {
+      return { bank, name, network, overseasRate: overseas, domesticRate: domestic, foreignFee: fee, note, url };
+    }
+
+    const _CARDS_LIST = [
+      // [搜尋關鍵字[], 銀行, 卡名, 卡組織, 海外%, 國內%, 手續費%, 備註, 官網]
+      // === 中國信託 ===
+      [["中信Flygo","飛狗卡","Flygo","中信飛狗"], "中國信託","Flygo飛狗卡","Visa",2.8,1,1.5,"全球海外2.8%，需登錄","https://www.ctbcbank.com/twrbo/zh_tw/index/card-credit/card-credit.html"],
+      [["中信LINE Pay","LINE Pay卡","中信LINE"], "中國信託","LINE Pay卡","Visa",1,1,1.5,"LINE Pay消費最高3%","https://www.ctbcbank.com/twrbo/zh_tw/index/card-credit/card-credit.html"],
+      [["中信現金回饋","中信御璽"], "中國信託","現金回饋御璽卡","Visa",2,0.5,1.5,"海外2%，國內0.5%","https://www.ctbcbank.com/twrbo/zh_tw/index/card-credit/card-credit.html"],
+      [["中信商旅","商旅卡"], "中國信託","商旅鈦金卡","Visa",2.8,0.3,1.5,"海外2.8%，需登錄","https://www.ctbcbank.com/twrbo/zh_tw/index/card-credit/card-credit.html"],
+      [["中信ALL ME","ALL ME"], "中國信託","ALL ME卡","Mastercard",1,3,1.5,"數位消費最高3%","https://www.ctbcbank.com/twrbo/zh_tw/index/card-credit/card-credit.html"],
+      // === 玉山銀行 ===
+      [["玉山U Bear","U Bear","UBear"], "玉山銀行","U Bear信用卡","Mastercard",3,1,1.5,"網購/行動支付最高10%，海外3%","https://www.esunbank.com.tw/bank/personal/credit-card"],
+      [["玉山Only","Only卡"], "玉山銀行","Only卡","Visa",1.2,1.2,1.5,"國內外1.2%無腦刷","https://www.esunbank.com.tw/bank/personal/credit-card"],
+      [["玉山Pi","Pi拍錢包","Pi卡"], "玉山銀行","Pi拍錢包信用卡","Visa",2.5,2.5,1.5,"P幣2.5%回饋","https://www.esunbank.com.tw/bank/personal/credit-card"],
+      [["玉山藥師","藥師玉山","藥師卡"], "玉山銀行","藥師公會聯名卡","Visa",1.2,1.2,1.5,"藥師公會聯名，一般消費約1.2%","https://www.esunbank.com.tw/bank/personal/credit-card"],
+      [["玉山Combo","Combo卡"], "玉山銀行","Combo卡","Mastercard",1,1,1.5,"指定通路最高6%","https://www.esunbank.com.tw/bank/personal/credit-card"],
+      [["玉山商旅","e.Fingo"], "玉山銀行","e.Fingo卡","Mastercard",3,2,1.5,"數位消費2%，海外3%","https://www.esunbank.com.tw/bank/personal/credit-card"],
+      // === 國泰世華 ===
+      [["國泰CUBE","CUBE卡","cube"], "國泰世華","CUBE卡","Mastercard",3,1,1.5,"精選任務日韓3%，需App選任務","https://www.cathaybk.com.tw/cathaybk/personal/product/credit-card/cards/"],
+      [["國泰Costco","國泰好市多"], "國泰世華","Costco聯名卡","Mastercard",2,1,1.5,"Costco消費3%，海外2%","https://www.cathaybk.com.tw/cathaybk/personal/product/credit-card/cards/"],
+      [["國泰現金回饋","國泰御璽"], "國泰世華","現金回饋御璽卡","Mastercard",1.5,0.5,1.5,"海外1.5%，國內0.5%","https://www.cathaybk.com.tw/cathaybk/personal/product/credit-card/cards/"],
+      [["國泰KOKO","KOKO卡"], "國泰世華","KOKO卡","Mastercard",1,2,1.5,"數位通路2%","https://www.cathaybk.com.tw/cathaybk/personal/product/credit-card/cards/"],
+      // === 台新銀行 ===
+      [["台新GoGo","GoGo卡","gogo"], "台新銀行","GoGo卡","Visa",2.8,0.5,1.5,"數位通路/行動支付3.8%，海外2.8%","https://www.taishinbank.com.tw"],
+      [["台新FLY","GOGO FLY","FLY卡","台新飛"], "台新銀行","@GOGO FLY卡","JCB",3,1,1.5,"日韓最高6%，其他海外3%","https://www.taishinbank.com.tw"],
+      [["台新Richart","Richart"], "台新銀行","Richart FlyGo卡","Visa",2.8,0.5,1.5,"海外2.8%","https://www.taishinbank.com.tw"],
+      [["台新玫瑰卡","玫瑰卡"], "台新銀行","玫瑰卡","Visa",1,1,1.5,"百貨通路回饋","https://www.taishinbank.com.tw"],
+      [["台新太陽卡","太陽卡"], "台新銀行","太陽卡","Visa",1,0.5,1.5,"加油回饋","https://www.taishinbank.com.tw"],
+      // === 富邦銀行 ===
+      [["富邦Costco","富邦好市多"], "富邦銀行","Costco聯名卡","Mastercard",5,1,1.5,"Costco賣場最高2%，海外實體5%","https://www.fubon.com/banking/personal/credit_card/all_cards/all_cards.htm"],
+      [["富邦OpenLife","OpenLife","OpenLife卡"], "富邦銀行","OpenLife卡","Visa",2,2,1.5,"國內外2%","https://www.fubon.com/banking/personal/credit_card/all_cards/all_cards.htm"],
+      [["富邦momo","momo聯名卡","momo卡"], "富邦銀行","momo聯名卡","Mastercard",5,3,1.5,"momo站內3~7%，海外實體/旅遊最高5%","https://www.fubon.com/banking/personal/credit_card/all_cards/all_cards.htm"],
+      [["富邦J卡","J卡","富邦J"], "富邦銀行","J卡","JCB",2.5,2,1.5,"日本最高5%，海外2.5%","https://www.fubon.com/banking/personal/credit_card/all_cards/all_cards.htm"],
+      [["富邦數位生活","數位生活卡"], "富邦銀行","數位生活卡","Mastercard",2,3,1.5,"數位通路3%","https://www.fubon.com/banking/personal/credit_card/all_cards/all_cards.htm"],
+      // === 永豐銀行 ===
+      [["永豐DAWHO","大戶卡","DAWHO"], "永豐銀行","DAWHO大戶卡","Mastercard",3,3,1.5,"大戶等級享國內外3%","https://bank.sinopac.com/sinopacBT/personal/credit-card/overview.html"],
+      [["永豐Sport","Sport卡"], "永豐銀行","Sport卡","Mastercard",2,2,1.5,"國內外2%，指定通路3%","https://bank.sinopac.com/sinopacBT/personal/credit-card/overview.html"],
+      [["永豐幣倍卡","幣倍卡","永豐幣倍"], "永豐銀行","幣倍卡","Mastercard",3,2,1.5,"海外3%，國內行動支付2%","https://bank.sinopac.com/sinopacBT/personal/credit-card/overview.html"],
+      [["永豐現金回饋","永豐JCB"], "永豐銀行","JCB現金回饋卡","JCB",2,1,1.5,"海外2%，日本額外優惠","https://bank.sinopac.com/sinopacBT/personal/credit-card/overview.html"],
+      // === 聯邦銀行 ===
+      [["聯邦賴點卡","賴點卡","聯邦賴點"], "聯邦銀行","賴點卡","JCB",2,2,1.5,"國內外2% LINE Points，日本3.5%","https://card.ubot.com.tw/"],
+      [["聯邦綠卡","綠卡","聯邦green"], "聯邦銀行","綠卡","Visa",3,2,1.5,"海外3%，國內綠色消費2%","https://card.ubot.com.tw/"],
+      [["聯邦全國加油","聯邦加油卡"], "聯邦銀行","全國加油聯名卡","Visa",1,1,1.5,"加油5%回饋","https://card.ubot.com.tw/"],
+      // === 星展銀行 ===
+      [["星展飛行卡","星展飛行","DBS飛行"], "星展銀行","飛行卡","Visa",2.5,1.2,1.5,"海外2.5%，可累積哩程","https://www.dbs.com.tw/personal-zh/cards/credit-cards.page"],
+      [["星展現金回饋","星展eco","星展ECO"], "星展銀行","eco永續卡","Visa",2,1.5,1.5,"海外2%，國內1.5%","https://www.dbs.com.tw/personal-zh/cards/credit-cards.page"],
+      // === 匯豐銀行 ===
+      [["匯豐旅人卡","匯豐旅人","旅人卡"], "匯豐銀行","旅人卡","Visa",2.22,1.22,1.5,"海外2.22%，自動回饋無需登錄","https://www.hsbc.com.tw/credit-cards/"],
+      [["匯豐現金回饋","匯豐御璽"], "匯豐銀行","現金回饋御璽卡","Visa",2.22,1.22,1.5,"國內外消費自動回饋","https://www.hsbc.com.tw/credit-cards/"],
+      [["匯豐匯鑽卡","匯鑽卡"], "匯豐銀行","匯鑽卡","Visa",3,1.22,1.5,"海外3%","https://www.hsbc.com.tw/credit-cards/"],
+      // === 樂天銀行 ===
+      [["樂天信用卡","樂天卡","樂天JCB","樂天"], "樂天銀行","樂天信用卡","JCB",3,1.22,1.5,"日本消費最高5%，海外3%","https://card.rakuten.com.tw/"],
+      [["樂天VISA","樂天玫瑰金"], "樂天銀行","VISA經典玫瑰金卡","Visa",3,2,1.5,"海外3%，新戶國內2%","https://card.rakuten.com.tw/"],
+      // === 新光銀行 ===
+      [["新光悠遊","新光悠遊聯名"], "新光銀行","悠遊聯名卡","Visa",1,1,1.5,"一般消費1%","https://www.skbank.com.tw/credit_card"],
+      [["新光OU","OU卡","新光現金回饋"], "新光銀行","OU現金回饋卡","Mastercard",3,1,1.5,"海外3%，國內1%","https://www.skbank.com.tw/credit_card"],
+      [["新光美國運通","新光AMEX"], "新光銀行","美國運通卡","AMEX",2,1.2,1.5,"海外2%","https://www.skbank.com.tw/credit_card"],
+      // === 元大銀行 ===
+      [["元大鑽金卡","元大鑽金","鑽金卡"], "元大銀行","鑽金卡","Visa",3,1.2,1.5,"海外3%，國內1.2%","https://www.yuantabank.com.tw/bank/credit-card/"],
+      [["元大鑽金","元大"], "元大銀行","鑽金卡","Visa",3,1.2,1.5,"海外3%，國內1.2%","https://www.yuantabank.com.tw/bank/credit-card/"],
+      // === 凱基銀行 ===
+      [["凱基魔BUY","魔BUY卡","魔BUY"], "凱基銀行","魔BUY卡","Mastercard",3,1.2,1.5,"海外3%，指定通路加碼","https://www.kgibank.com/personal/card/credit"],
+      [["凱基現金回饋","凱基御璽"], "凱基銀行","現金回饋御璽卡","Visa",2,1,1.5,"海外2%，國內1%","https://www.kgibank.com/personal/card/credit"],
+      // === 華南銀行 ===
+      [["華南超級現金回饋","華南現金回饋","華南超級"], "華南銀行","超級現金回饋卡","Visa",3,1,1.5,"海外3%，國內1%","https://www.hncb.com.tw/personal/credit_card.shtml"],
+      [["華南Rich+","Rich+","華南Rich"], "華南銀行","Rich+卡","Mastercard",2.5,2,1.5,"海外2.5%，行動支付2%","https://www.hncb.com.tw/personal/credit_card.shtml"],
+      // === 第一銀行 ===
+      [["第一iLEO","iLEO卡","一銀iLEO"], "第一銀行","iLEO卡","Visa",2.5,1,1.5,"海外2.5%，行動支付1.5%","https://www.firstbank.com.tw/sites/fcb/creditcard"],
+      [["第一現金回饋","一銀現金回饋"], "第一銀行","綠活卡","Visa",2.2,1,1.5,"海外2.2%","https://www.firstbank.com.tw/sites/fcb/creditcard"],
+      // === 兆豐銀行 ===
+      [["兆豐現金回饋","兆豐GOGORO","兆豐e秒刷"], "兆豐銀行","e秒刷卡","Visa",2.5,1,1.5,"海外2.5%","https://www.megabank.com.tw/personal/credit-card"],
+      [["兆豐利多卡","利多卡"], "兆豐銀行","利多御璽卡","Visa",2.5,1,1.5,"海外2.5%","https://www.megabank.com.tw/personal/credit-card"],
+      // === 渣打銀行 ===
+      [["渣打現金回饋","渣打御璽","渣打"], "渣打銀行","現金回饋御璽卡","Visa",2,1.88,1.5,"國內1.88%，海外2%","https://www.sc.com/tw/credit-cards/"],
+      // === LINE Bank ===
+      [["LINE Bank","LINE Bank卡","快點卡"], "LINE Bank","快點卡","Visa",1,2,1.5,"LINE Pay消費2%","https://www.linebank.com.tw/"],
+      // === 合庫銀行 ===
+      [["合庫現金回饋","合庫"], "合庫銀行","現金回饋卡","Visa",2,1,1.5,"海外2%，國內1%","https://www.tcb-bank.com.tw/personal-banking/credit-card"],
+      // === 將來銀行 ===
+      [["將來銀行","將來NEXT","NEXT卡"], "將來銀行","NEXT卡","Mastercard",1,2,1.5,"數位消費2%","https://www.nextbank.com.tw/"],
+    ];
+
+    // Build POPULAR_CARDS from list (each card gets multiple search keys)
+    const POPULAR_CARDS = {};
+    _CARDS_LIST.forEach(([keys, bank, name, net, overseas, domestic, fee, note, url]) => {
+      const card = C(bank, name, net, overseas, domestic, fee, note, url);
+      keys.forEach(k => { POPULAR_CARDS[k] = card; });
+      // Also add by card name itself
+      POPULAR_CARDS[name] = card;
+    });
 
     // Bank official URLs for fallback
     const BANK_URLS = {
