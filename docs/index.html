@@ -837,8 +837,8 @@
 
     async function loadData() {
       const [cardsResp, rewardsResp] = await Promise.all([
-        fetch("/data/cards.json"),
-        fetch("/data/rewards.json")
+        fetch("data/cards.json"),
+        fetch("data/rewards.json")
       ]);
       cardsData = await cardsResp.json();
       rewardsData = await rewardsResp.json();
