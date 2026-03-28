@@ -1,0 +1,356 @@
+{
+  "lastUpdated": "2026-03-28",
+  "countries": [
+    {"code": "JP", "name": "日本", "region": "亞洲", "currency": "JPY"},
+    {"code": "KR", "name": "韓國", "region": "亞洲", "currency": "KRW"},
+    {"code": "TH", "name": "泰國", "region": "亞洲", "currency": "THB"},
+    {"code": "VN", "name": "越南", "region": "亞洲", "currency": "VND"},
+    {"code": "SG", "name": "新加坡", "region": "亞洲", "currency": "SGD"},
+    {"code": "MY", "name": "馬來西亞", "region": "亞洲", "currency": "MYR"},
+    {"code": "HK", "name": "香港", "region": "亞洲", "currency": "HKD"},
+    {"code": "CN", "name": "中國", "region": "亞洲", "currency": "CNY"},
+    {"code": "US", "name": "美國", "region": "美洲", "currency": "USD"},
+    {"code": "CA", "name": "加拿大", "region": "美洲", "currency": "CAD"},
+    {"code": "GB", "name": "英國", "region": "歐洲", "currency": "GBP"},
+    {"code": "FR", "name": "法國", "region": "歐洲", "currency": "EUR"},
+    {"code": "DE", "name": "德國", "region": "歐洲", "currency": "EUR"},
+    {"code": "IT", "name": "義大利", "region": "歐洲", "currency": "EUR"},
+    {"code": "AU", "name": "澳洲", "region": "大洋洲", "currency": "AUD"},
+    {"code": "NZ", "name": "紐西蘭", "region": "大洋洲", "currency": "NZD"}
+  ],
+  "domesticCategories": [
+    {"id": "online", "name": "網購/數位消費"},
+    {"id": "supermarket", "name": "超市/量販"},
+    {"id": "dining", "name": "餐飲"},
+    {"id": "transport", "name": "交通/加油"},
+    {"id": "convenience", "name": "超商"},
+    {"id": "general", "name": "一般消費"},
+    {"id": "mobile_pay", "name": "行動支付"}
+  ],
+  "rewards": [
+    {
+      "cardId": "ctbc-flygo",
+      "overseas": {
+        "defaultRate": 2.8,
+        "countrySpecific": {},
+        "regionSpecific": {},
+        "note": "全球海外消費皆享 2.8% 現金回饋，需登錄"
+      },
+      "domestic": {
+        "general": 1.0,
+        "categories": {
+          "online": 1.0,
+          "dining": 1.0
+        },
+        "note": "國內一般消費 1%"
+      },
+      "promotions": [
+        {
+          "title": "海外消費加碼",
+          "description": "每月海外消費享 2.8% 現金回饋，需事先登錄活動",
+          "startDate": "2026-01-01",
+          "endDate": "2026-06-30",
+          "conditions": "每月回饋上限 $500"
+        }
+      ]
+    },
+    {
+      "cardId": "ctbc-linego",
+      "overseas": {
+        "defaultRate": 1.0,
+        "countrySpecific": {},
+        "regionSpecific": {},
+        "note": "海外消費 1% LINE Points"
+      },
+      "domestic": {
+        "general": 1.0,
+        "categories": {
+          "mobile_pay": 3.0
+        },
+        "note": "LINE Pay 消費最高 3%"
+      },
+      "promotions": []
+    },
+    {
+      "cardId": "esun-ubear",
+      "overseas": {
+        "defaultRate": 3.0,
+        "countrySpecific": {
+          "JP": 5.0,
+          "KR": 5.0
+        },
+        "regionSpecific": {},
+        "note": "海外消費 3%，日韓加碼至 5%（限期活動）"
+      },
+      "domestic": {
+        "general": 1.0,
+        "categories": {
+          "online": 5.0,
+          "mobile_pay": 5.0
+        },
+        "note": "數位通路及行動支付最高 5%"
+      },
+      "promotions": [
+        {
+          "title": "日韓消費加碼",
+          "description": "日本、韓國實體消費享 5% 現金回饋",
+          "startDate": "2026-01-01",
+          "endDate": "2026-06-30",
+          "conditions": "需登錄，每期回饋上限 $300"
+        }
+      ]
+    },
+    {
+      "cardId": "esun-only",
+      "overseas": {
+        "defaultRate": 1.2,
+        "countrySpecific": {},
+        "regionSpecific": {},
+        "note": "海外消費 1.2%"
+      },
+      "domestic": {
+        "general": 1.2,
+        "categories": {},
+        "note": "國內外皆 1.2%，簡單無腦刷"
+      },
+      "promotions": []
+    },
+    {
+      "cardId": "cathay-cube",
+      "overseas": {
+        "defaultRate": 1.0,
+        "countrySpecific": {
+          "JP": 3.0,
+          "KR": 3.0
+        },
+        "regionSpecific": {
+          "歐洲": 2.0
+        },
+        "note": "日韓 3%，歐洲 2%，其他海外 1%（限精選任務）"
+      },
+      "domestic": {
+        "general": 1.0,
+        "categories": {
+          "dining": 3.0,
+          "online": 3.0,
+          "transport": 3.0
+        },
+        "note": "精選任務通路最高 3%"
+      },
+      "promotions": [
+        {
+          "title": "CUBE 精選海外任務",
+          "description": "選擇海外任務後，日韓消費享 3% 小樹點回饋",
+          "startDate": "2026-01-01",
+          "endDate": "2026-12-31",
+          "conditions": "需在 App 選擇任務，每月上限 $500"
+        }
+      ]
+    },
+    {
+      "cardId": "cathay-costco",
+      "overseas": {
+        "defaultRate": 2.0,
+        "countrySpecific": {},
+        "regionSpecific": {},
+        "note": "海外消費 2%"
+      },
+      "domestic": {
+        "general": 1.0,
+        "categories": {
+          "supermarket": 3.0
+        },
+        "note": "Costco 消費 3%"
+      },
+      "promotions": []
+    },
+    {
+      "cardId": "taishin-gogo",
+      "overseas": {
+        "defaultRate": 2.8,
+        "countrySpecific": {},
+        "regionSpecific": {},
+        "note": "海外消費 2.8%"
+      },
+      "domestic": {
+        "general": 0.5,
+        "categories": {
+          "online": 3.8,
+          "mobile_pay": 3.8
+        },
+        "note": "數位及行動支付 3.8%，一般消費 0.5%"
+      },
+      "promotions": [
+        {
+          "title": "數位通路加碼",
+          "description": "網購、串流、外送平台享 3.8% 現金回饋",
+          "startDate": "2026-01-01",
+          "endDate": "2026-06-30",
+          "conditions": "每期回饋上限 $300"
+        }
+      ]
+    },
+    {
+      "cardId": "taishin-fly",
+      "overseas": {
+        "defaultRate": 3.0,
+        "countrySpecific": {
+          "JP": 6.0,
+          "KR": 6.0
+        },
+        "regionSpecific": {},
+        "note": "日韓最高 6%，其他海外 3%"
+      },
+      "domestic": {
+        "general": 1.0,
+        "categories": {},
+        "note": "國內 1%"
+      },
+      "promotions": [
+        {
+          "title": "日韓瘋旅遊",
+          "description": "日本、韓國消費最高 6% 回饋",
+          "startDate": "2026-01-01",
+          "endDate": "2026-06-30",
+          "conditions": "需登錄，JCB 卡限定，每月回饋上限 $600"
+        }
+      ]
+    },
+    {
+      "cardId": "fubon-openlife",
+      "overseas": {
+        "defaultRate": 2.0,
+        "countrySpecific": {},
+        "regionSpecific": {},
+        "note": "海外消費 2%"
+      },
+      "domestic": {
+        "general": 2.0,
+        "categories": {},
+        "note": "國內外皆 2%"
+      },
+      "promotions": []
+    },
+    {
+      "cardId": "fubon-costco",
+      "overseas": {
+        "defaultRate": 1.0,
+        "countrySpecific": {},
+        "regionSpecific": {},
+        "note": "海外消費 1%"
+      },
+      "domestic": {
+        "general": 1.0,
+        "categories": {
+          "supermarket": 3.0,
+          "transport": 2.0
+        },
+        "note": "Costco 最高 3%，加油 2%"
+      },
+      "promotions": []
+    },
+    {
+      "cardId": "sinopac-sport",
+      "overseas": {
+        "defaultRate": 2.0,
+        "countrySpecific": {},
+        "regionSpecific": {},
+        "note": "海外消費 2%"
+      },
+      "domestic": {
+        "general": 2.0,
+        "categories": {
+          "online": 3.0
+        },
+        "note": "指定運動通路 3%，一般 2%"
+      },
+      "promotions": []
+    },
+    {
+      "cardId": "sinopac-dawho",
+      "overseas": {
+        "defaultRate": 3.0,
+        "countrySpecific": {},
+        "regionSpecific": {},
+        "note": "海外消費 3%（大戶等級）"
+      },
+      "domestic": {
+        "general": 3.0,
+        "categories": {},
+        "note": "國內外皆 3%（需達大戶等級）"
+      },
+      "promotions": [
+        {
+          "title": "大戶等級加碼",
+          "description": "符合大戶等級享國內外 3% 現金回饋",
+          "startDate": "2026-01-01",
+          "endDate": "2026-12-31",
+          "conditions": "需維持大戶等級（日均餘額 10 萬或月消費 3 筆）"
+        }
+      ]
+    },
+    {
+      "cardId": "ubot-jcb-platinum",
+      "overseas": {
+        "defaultRate": 2.0,
+        "countrySpecific": {
+          "JP": 3.5
+        },
+        "regionSpecific": {},
+        "note": "日本 3.5%，其他海外 2%"
+      },
+      "domestic": {
+        "general": 2.0,
+        "categories": {},
+        "note": "國內外 2% LINE Points"
+      },
+      "promotions": [
+        {
+          "title": "日本加碼",
+          "description": "日本消費享 3.5% LINE Points 回饋",
+          "startDate": "2026-01-01",
+          "endDate": "2026-12-31",
+          "conditions": "JCB 卡限定"
+        }
+      ]
+    },
+    {
+      "cardId": "dbs-travel",
+      "overseas": {
+        "defaultRate": 2.5,
+        "countrySpecific": {},
+        "regionSpecific": {},
+        "note": "海外消費 2.5%"
+      },
+      "domestic": {
+        "general": 1.2,
+        "categories": {},
+        "note": "國內 1.2%"
+      },
+      "promotions": []
+    },
+    {
+      "cardId": "hsbc-travel",
+      "overseas": {
+        "defaultRate": 2.22,
+        "countrySpecific": {},
+        "regionSpecific": {},
+        "note": "海外消費 2.22%"
+      },
+      "domestic": {
+        "general": 1.22,
+        "categories": {},
+        "note": "國內 1.22%"
+      },
+      "promotions": [
+        {
+          "title": "旅人卡海外回饋",
+          "description": "海外消費享最高 2.22% 現金回饋",
+          "startDate": "2026-01-01",
+          "endDate": "2026-12-31",
+          "conditions": "自動回饋，無需登錄"
+        }
+      ]
+    }
+  ]
+}

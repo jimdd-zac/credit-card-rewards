@@ -1,0 +1,1915 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>信用卡出國刷卡攻略</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Microsoft JhengHei", sans-serif;
+      background: #f0f2f5;
+      color: #1a1a2e;
+      line-height: 1.6;
+    }
+
+    .header {
+      background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+      color: white;
+      padding: 2rem;
+      text-align: center;
+    }
+
+    .header h1 {
+      font-size: 2rem;
+      margin-bottom: 0.5rem;
+    }
+
+    .header p {
+      opacity: 0.8;
+      font-size: 0.95rem;
+    }
+
+    .last-updated {
+      display: inline-block;
+      background: rgba(255,255,255,0.15);
+      padding: 0.3rem 0.8rem;
+      border-radius: 20px;
+      font-size: 0.8rem;
+      margin-top: 0.5rem;
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 1.5rem;
+    }
+
+    /* Tabs */
+    .tabs {
+      display: flex;
+      gap: 0.5rem;
+      margin-bottom: 1.5rem;
+      flex-wrap: wrap;
+    }
+
+    .tab-btn {
+      padding: 0.7rem 1.5rem;
+      border: none;
+      background: white;
+      border-radius: 10px;
+      cursor: pointer;
+      font-size: 1rem;
+      font-weight: 500;
+      color: #666;
+      transition: all 0.2s;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+    }
+
+    .tab-btn:hover { background: #e8eaf0; }
+
+    .tab-btn.active {
+      background: #0f3460;
+      color: white;
+    }
+
+    /* Filters */
+    .filters {
+      background: white;
+      padding: 1.2rem;
+      border-radius: 12px;
+      margin-bottom: 1.5rem;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+      align-items: center;
+    }
+
+    .filter-group {
+      display: flex;
+      flex-direction: column;
+      gap: 0.3rem;
+    }
+
+    .filter-group label {
+      font-size: 0.8rem;
+      color: #888;
+      font-weight: 500;
+    }
+
+    .filter-group select, .filter-group input {
+      padding: 0.5rem 0.8rem;
+      border: 1.5px solid #ddd;
+      border-radius: 8px;
+      font-size: 0.95rem;
+      background: #fafafa;
+      min-width: 150px;
+    }
+
+    .filter-group select:focus, .filter-group input:focus {
+      outline: none;
+      border-color: #0f3460;
+    }
+
+    /* Country Grid */
+    .country-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+      gap: 0.8rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .country-btn {
+      padding: 0.8rem;
+      border: 2px solid #e0e0e0;
+      background: white;
+      border-radius: 12px;
+      cursor: pointer;
+      text-align: center;
+      transition: all 0.2s;
+      font-size: 0.9rem;
+    }
+
+    .country-btn:hover {
+      border-color: #0f3460;
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    }
+
+    .country-btn.selected {
+      border-color: #0f3460;
+      background: #0f3460;
+      color: white;
+    }
+
+    .country-btn .flag {
+      font-size: 1.8rem;
+      display: block;
+      margin-bottom: 0.3rem;
+    }
+
+    /* Card Rankings */
+    .card-ranking {
+      background: white;
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+      margin-bottom: 1rem;
+    }
+
+    .rank-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1rem 1.2rem;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+
+    .rank-header:hover { background: #f8f9fa; }
+
+    .rank-number {
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: bold;
+      font-size: 1rem;
+      color: white;
+      flex-shrink: 0;
+    }
+
+    .rank-1 { background: linear-gradient(135deg, #f5af19, #f12711); }
+    .rank-2 { background: linear-gradient(135deg, #a8a8a8, #6d6d6d); }
+    .rank-3 { background: linear-gradient(135deg, #cd7f32, #8b5e3c); }
+    .rank-default { background: #0f3460; }
+
+    .rank-info {
+      flex: 1;
+      margin: 0 1rem;
+    }
+
+    .rank-info h3 {
+      font-size: 1rem;
+      margin-bottom: 0.2rem;
+    }
+
+    .rank-info .bank-name {
+      color: #888;
+      font-size: 0.85rem;
+    }
+
+    .rank-info .card-network {
+      display: inline-block;
+      padding: 0.1rem 0.5rem;
+      border-radius: 4px;
+      font-size: 0.7rem;
+      font-weight: bold;
+      margin-left: 0.5rem;
+    }
+
+    .network-visa { background: #1a1f71; color: white; }
+    .network-mastercard { background: #eb001b; color: white; }
+    .network-jcb { background: #0e4c92; color: white; }
+    .network-amex { background: #006fcf; color: white; }
+
+    .reward-rate {
+      font-size: 1.6rem;
+      font-weight: bold;
+      color: #e74c3c;
+      white-space: nowrap;
+    }
+
+    .reward-rate small {
+      font-size: 0.8rem;
+      color: #999;
+    }
+
+    .rank-detail {
+      display: none;
+      padding: 0 1.2rem 1.2rem;
+      border-top: 1px solid #eee;
+    }
+
+    .rank-detail.open { display: block; }
+
+    .detail-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem;
+      margin-top: 1rem;
+    }
+
+    .detail-item {
+      background: #f8f9fa;
+      padding: 0.8rem;
+      border-radius: 8px;
+    }
+
+    .detail-item h4 {
+      font-size: 0.8rem;
+      color: #888;
+      margin-bottom: 0.3rem;
+    }
+
+    .detail-item p {
+      font-size: 0.95rem;
+    }
+
+    .promo-tag {
+      display: inline-block;
+      background: #fff3cd;
+      color: #856404;
+      padding: 0.2rem 0.6rem;
+      border-radius: 6px;
+      font-size: 0.8rem;
+      margin: 0.3rem 0.3rem 0 0;
+    }
+
+    .promo-tag.active {
+      background: #d4edda;
+      color: #155724;
+    }
+
+    /* Calculator */
+    .calculator {
+      background: white;
+      border-radius: 12px;
+      padding: 1.5rem;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+      margin-bottom: 1.5rem;
+    }
+
+    .calculator h2 {
+      font-size: 1.2rem;
+      margin-bottom: 1rem;
+    }
+
+    .calc-input-row {
+      display: flex;
+      gap: 1rem;
+      align-items: flex-end;
+      margin-bottom: 1rem;
+      flex-wrap: wrap;
+    }
+
+    .calc-input-row .filter-group { flex: 1; min-width: 200px; }
+
+    .calc-btn {
+      padding: 0.6rem 1.5rem;
+      background: #0f3460;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 1rem;
+      font-weight: 500;
+    }
+
+    .calc-btn:hover { background: #16213e; }
+
+    .calc-results {
+      display: grid;
+      gap: 0.8rem;
+    }
+
+    .calc-result-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0.8rem 1rem;
+      background: #f8f9fa;
+      border-radius: 8px;
+      border-left: 4px solid #0f3460;
+    }
+
+    .calc-result-item .card-name { font-weight: 500; }
+    .calc-result-item .cashback {
+      font-weight: bold;
+      color: #e74c3c;
+      font-size: 1.1rem;
+    }
+
+    /* Domestic tab */
+    .domestic-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: 1rem;
+    }
+
+    .domestic-card {
+      background: white;
+      border-radius: 12px;
+      padding: 1.2rem;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+    }
+
+    .domestic-card h3 {
+      font-size: 1rem;
+      margin-bottom: 0.8rem;
+      padding-bottom: 0.5rem;
+      border-bottom: 2px solid #f0f0f0;
+    }
+
+    .category-rewards {
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+
+    .cat-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0.4rem 0;
+    }
+
+    .cat-row .rate {
+      font-weight: bold;
+      color: #e74c3c;
+    }
+
+    /* Compare tab */
+    .compare-selector {
+      background: white;
+      border-radius: 12px;
+      padding: 1.2rem;
+      margin-bottom: 1.5rem;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+    }
+
+    .compare-selector h3 { margin-bottom: 0.8rem; }
+
+    .compare-checks {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+    }
+
+    .compare-check {
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+      padding: 0.4rem 0.8rem;
+      background: #f8f9fa;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 0.9rem;
+      transition: background 0.2s;
+    }
+
+    .compare-check:hover { background: #e8eaf0; }
+    .compare-check input { accent-color: #0f3460; }
+
+    .compare-table {
+      width: 100%;
+      border-collapse: separate;
+      border-spacing: 0;
+      background: white;
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+    }
+
+    .compare-table th, .compare-table td {
+      padding: 0.8rem 1rem;
+      text-align: center;
+      border-bottom: 1px solid #eee;
+    }
+
+    .compare-table th {
+      background: #0f3460;
+      color: white;
+      font-size: 0.85rem;
+    }
+
+    .compare-table td:first-child {
+      text-align: left;
+      font-weight: 500;
+      background: #fafafa;
+    }
+
+    .compare-table .highlight {
+      background: #fff3cd;
+      font-weight: bold;
+    }
+
+    .empty-state {
+      text-align: center;
+      padding: 3rem;
+      color: #999;
+    }
+
+    .empty-state .icon { font-size: 3rem; margin-bottom: 1rem; }
+
+    /* Custom Card Tab */
+    .custom-form {
+      background: white;
+      border-radius: 12px;
+      padding: 1.5rem;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+      margin-bottom: 1.5rem;
+    }
+
+    .custom-form h2 { font-size: 1.2rem; margin-bottom: 1rem; }
+
+    .form-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem;
+    }
+
+    .form-grid .filter-group { min-width: 0; }
+
+    .form-grid .full-width { grid-column: 1 / -1; }
+
+    .form-actions {
+      margin-top: 1.2rem;
+      display: flex;
+      gap: 0.8rem;
+    }
+
+    .btn-primary {
+      padding: 0.7rem 1.5rem;
+      background: #0f3460;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 1rem;
+      font-weight: 500;
+    }
+
+    .btn-primary:hover { background: #16213e; }
+
+    .btn-secondary {
+      padding: 0.7rem 1.5rem;
+      background: #e8eaf0;
+      color: #333;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 1rem;
+    }
+
+    .btn-secondary:hover { background: #ddd; }
+
+    .btn-danger {
+      padding: 0.4rem 0.8rem;
+      background: #fee;
+      color: #c0392b;
+      border: 1px solid #f5c6cb;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 0.85rem;
+    }
+
+    .btn-danger:hover { background: #f8d7da; }
+
+    .custom-card-list {
+      display: grid;
+      gap: 1rem;
+    }
+
+    .custom-card-item {
+      background: white;
+      border-radius: 12px;
+      padding: 1.2rem;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-left: 4px solid #27ae60;
+    }
+
+    .custom-card-item .card-main { flex: 1; }
+
+    .custom-card-item h3 { font-size: 1rem; margin-bottom: 0.3rem; }
+
+    .custom-card-item .card-stats {
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+      margin-top: 0.5rem;
+      font-size: 0.85rem;
+      color: #666;
+    }
+
+    .custom-card-item .stat-value {
+      font-weight: bold;
+      color: #e74c3c;
+    }
+
+    .custom-badge {
+      display: inline-block;
+      background: #d4edda;
+      color: #155724;
+      padding: 0.1rem 0.5rem;
+      border-radius: 4px;
+      font-size: 0.7rem;
+      font-weight: bold;
+      margin-left: 0.5rem;
+    }
+
+    .country-rate-rows { margin-top: 0.8rem; }
+
+    .country-rate-row {
+      display: flex;
+      gap: 0.8rem;
+      align-items: flex-end;
+      margin-bottom: 0.5rem;
+    }
+
+    .country-rate-row .filter-group { flex: 1; min-width: 0; }
+
+    .country-rate-row .btn-danger { align-self: flex-end; margin-bottom: 0.3rem; }
+
+    .add-country-btn {
+      padding: 0.4rem 1rem;
+      background: #f0f2f5;
+      border: 1.5px dashed #aaa;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 0.9rem;
+      color: #666;
+      margin-top: 0.3rem;
+    }
+
+    .add-country-btn:hover { background: #e8eaf0; border-color: #0f3460; color: #0f3460; }
+
+    /* Merchant tab */
+    .hot-tag {
+      padding: 0.4rem 0.9rem;
+      background: white;
+      border: 1.5px solid #ddd;
+      border-radius: 20px;
+      cursor: pointer;
+      font-size: 0.85rem;
+      transition: all 0.2s;
+    }
+
+    .hot-tag:hover { border-color: #0f3460; background: #f0f2ff; }
+
+    .merchant-match {
+      background: white;
+      border-radius: 12px;
+      padding: 1.2rem;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+      margin-bottom: 1rem;
+      border-left: 4px solid #27ae60;
+    }
+
+    .merchant-match h3 { font-size: 1.1rem; margin-bottom: 0.3rem; }
+
+    .merchant-match .match-category {
+      display: inline-block;
+      background: #e8f5e9;
+      color: #2e7d32;
+      padding: 0.2rem 0.7rem;
+      border-radius: 6px;
+      font-size: 0.8rem;
+      font-weight: 500;
+    }
+
+    .merchant-match .match-note {
+      font-size: 0.85rem;
+      color: #888;
+      margin-top: 0.4rem;
+    }
+
+    @media (max-width: 768px) {
+      .header h1 { font-size: 1.5rem; }
+      .filters { flex-direction: column; }
+      .detail-grid { grid-template-columns: 1fr; }
+      .calc-input-row { flex-direction: column; }
+      .country-grid { grid-template-columns: repeat(4, 1fr); }
+      .form-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+  <div class="header">
+    <h1>信用卡出國刷卡攻略</h1>
+    <p>找出去每個國家最划算的信用卡</p>
+    <div class="last-updated" id="lastUpdated"></div>
+  </div>
+
+  <div class="container">
+    <div class="tabs">
+      <button class="tab-btn active" data-tab="country">依國家查詢</button>
+      <button class="tab-btn" data-tab="domestic">國內消費</button>
+      <button class="tab-btn" data-tab="compare">卡片比較</button>
+      <button class="tab-btn" data-tab="calculator">回饋計算機</button>
+      <button class="tab-btn" data-tab="merchant">商家查詢</button>
+      <button class="tab-btn" data-tab="custom">自訂卡片</button>
+    </div>
+
+    <!-- Tab: 依國家查詢 -->
+    <div id="tab-country" class="tab-content">
+      <div class="filters">
+        <div class="filter-group">
+          <label>卡組織</label>
+          <select id="filterNetwork">
+            <option value="">全部</option>
+            <option value="Visa">Visa</option>
+            <option value="Mastercard">Mastercard</option>
+            <option value="JCB">JCB</option>
+          </select>
+        </div>
+        <div class="filter-group">
+          <label>銀行</label>
+          <select id="filterBank">
+            <option value="">全部</option>
+          </select>
+        </div>
+      </div>
+
+      <h2 style="margin-bottom:1rem;">選擇目的地國家</h2>
+      <div class="country-grid" id="countryGrid"></div>
+
+      <div id="rankingList"></div>
+    </div>
+
+    <!-- Tab: 國內消費 -->
+    <div id="tab-domestic" class="tab-content" style="display:none;">
+      <div class="filters">
+        <div class="filter-group">
+          <label>消費類別</label>
+          <select id="filterDomesticCat">
+            <option value="">全部類別</option>
+          </select>
+        </div>
+      </div>
+      <div class="domestic-grid" id="domesticGrid"></div>
+    </div>
+
+    <!-- Tab: 卡片比較 -->
+    <div id="tab-compare" class="tab-content" style="display:none;">
+      <div class="compare-selector">
+        <h3>選擇要比較的卡片（最多 5 張）</h3>
+        <div class="compare-checks" id="compareChecks"></div>
+      </div>
+      <div id="compareResult"></div>
+    </div>
+
+    <!-- Tab: 回饋計算機 -->
+    <div id="tab-calculator" class="tab-content" style="display:none;">
+      <div class="calculator">
+        <h2>回饋金額計算機</h2>
+        <div class="calc-input-row">
+          <div class="filter-group">
+            <label>消費國家</label>
+            <select id="calcCountry"></select>
+          </div>
+          <div class="filter-group">
+            <label>消費金額（台幣）</label>
+            <input type="number" id="calcAmount" placeholder="10000" value="10000">
+          </div>
+          <button class="calc-btn" onclick="calculate()">計算</button>
+        </div>
+        <div class="calc-results" id="calcResults"></div>
+      </div>
+    </div>
+    <!-- Tab: 商家查詢 -->
+    <div id="tab-merchant" class="tab-content" style="display:none;">
+      <div class="custom-form">
+        <h2>輸入商家或商品，推薦最佳信用卡</h2>
+        <p style="font-size:0.85rem;color:#888;margin-bottom:1rem;">輸入你要消費的商家、平台或商品類型，幫你找出回饋最高的卡片</p>
+        <div style="display:flex;gap:0.8rem;flex-wrap:wrap;">
+          <div class="filter-group" style="flex:1;min-width:200px;">
+            <input type="text" id="merchantQuery" placeholder="例：Costco、momo、全聯、Netflix、加油、星巴克" style="width:100%;">
+          </div>
+          <button class="btn-primary" onclick="searchMerchant()">查詢推薦</button>
+        </div>
+
+        <div id="merchantTags" style="margin-top:1rem;">
+          <span style="font-size:0.8rem;color:#888;">熱門搜尋：</span>
+          <div style="display:flex;flex-wrap:wrap;gap:0.5rem;margin-top:0.5rem;" id="hotMerchants"></div>
+        </div>
+      </div>
+
+      <div id="merchantResult" style="display:none;">
+        <div id="merchantMatchInfo" style="margin-bottom:1rem;"></div>
+        <div id="merchantWebResults" style="margin-bottom:1.5rem;"></div>
+        <div id="merchantRanking"></div>
+      </div>
+    </div>
+
+    <!-- Tab: 自訂卡片 -->
+    <div id="tab-custom" class="tab-content" style="display:none;">
+      <div class="custom-form" style="margin-bottom:1rem;">
+        <h2>搜尋信用卡優惠</h2>
+        <p style="font-size:0.85rem;color:#888;margin-bottom:1rem;">輸入銀行名稱或卡名，自動從網路查詢回饋資訊</p>
+        <div style="display:flex;gap:0.8rem;flex-wrap:wrap;">
+          <div class="filter-group" style="flex:1;min-width:200px;">
+            <input type="text" id="searchCardQuery" placeholder="例：花旗現金回饋卡、台新飛狗卡、樂天信用卡" style="width:100%;">
+          </div>
+          <button class="btn-primary" onclick="searchCard()" id="searchBtn">搜尋</button>
+        </div>
+        <div id="searchStatus" style="margin-top:0.8rem;font-size:0.9rem;color:#888;display:none;"></div>
+        <div id="searchResults" style="margin-top:1rem;display:none;">
+          <div style="font-size:0.85rem;color:#888;margin-bottom:0.5rem;">以下是從網路找到的資訊，可直接帶入表單：</div>
+          <div id="searchResultContent"></div>
+          <div style="display:flex;gap:0.8rem;margin-top:0.8rem;flex-wrap:wrap;">
+            <button class="btn-primary" onclick="applySearchResult()">帶入下方表單</button>
+            <a class="btn-secondary" id="openBankSiteBtn" style="display:none;text-decoration:none;text-align:center;" href="#" target="_blank" rel="noopener">前往官網確認</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="custom-form">
+        <h2>新增自訂信用卡</h2>
+        <div class="form-grid">
+          <div class="filter-group">
+            <label>銀行名稱 *</label>
+            <input type="text" id="customBank" placeholder="例：台北富邦">
+          </div>
+          <div class="filter-group">
+            <label>卡片名稱 *</label>
+            <input type="text" id="customName" placeholder="例：J 卡">
+          </div>
+          <div class="filter-group">
+            <label>卡組織</label>
+            <select id="customNetwork">
+              <option value="Visa">Visa</option>
+              <option value="Mastercard">Mastercard</option>
+              <option value="JCB">JCB</option>
+              <option value="AMEX">AMEX</option>
+            </select>
+          </div>
+          <div class="filter-group">
+            <label>年費</label>
+            <input type="text" id="customFeeNote" placeholder="例：免年費" value="免年費">
+          </div>
+          <div class="filter-group">
+            <label>海外手續費 (%)</label>
+            <input type="number" id="customForeignFee" step="0.1" value="1.5">
+          </div>
+          <div class="filter-group">
+            <label>海外基本回饋 (%)</label>
+            <input type="number" id="customOverseasRate" step="0.1" placeholder="例：2.0">
+          </div>
+          <div class="filter-group">
+            <label>國內一般回饋 (%)</label>
+            <input type="number" id="customDomesticRate" step="0.1" placeholder="例：1.0">
+          </div>
+          <div class="filter-group">
+            <label>備註</label>
+            <input type="text" id="customNote" placeholder="例：綁定數位帳戶加碼">
+          </div>
+
+          <div class="full-width">
+            <label style="font-size:0.8rem;color:#888;font-weight:500;">特定國家回饋（選填）</label>
+            <div class="country-rate-rows" id="countryRateRows"></div>
+            <button class="add-country-btn" onclick="addCountryRateRow()">+ 新增特定國家回饋</button>
+          </div>
+        </div>
+        <div class="form-actions">
+          <button class="btn-primary" onclick="saveCustomCard()">新增卡片</button>
+          <button class="btn-secondary" onclick="clearCustomForm()">清除</button>
+        </div>
+      </div>
+
+      <h2 style="margin-bottom:1rem;">已新增的自訂卡片</h2>
+      <div class="custom-card-list" id="customCardList">
+        <div class="empty-state"><div class="icon">💳</div><p>尚未新增自訂卡片<br>新增後會自動加入所有排名和比較中</p></div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    let cardsData = [];
+    let rewardsData = {};
+    let selectedCountry = null;
+
+    const FLAG_MAP = {
+      JP: "\u{1F1EF}\u{1F1F5}", KR: "\u{1F1F0}\u{1F1F7}", TH: "\u{1F1F9}\u{1F1ED}",
+      VN: "\u{1F1FB}\u{1F1F3}", SG: "\u{1F1F8}\u{1F1EC}", MY: "\u{1F1F2}\u{1F1FE}",
+      HK: "\u{1F1ED}\u{1F1F0}", CN: "\u{1F1E8}\u{1F1F3}", US: "\u{1F1FA}\u{1F1F8}",
+      CA: "\u{1F1E8}\u{1F1E6}", GB: "\u{1F1EC}\u{1F1E7}", FR: "\u{1F1EB}\u{1F1F7}",
+      DE: "\u{1F1E9}\u{1F1EA}", IT: "\u{1F1EE}\u{1F1F9}", AU: "\u{1F1E6}\u{1F1FA}",
+      NZ: "\u{1F1F3}\u{1F1FF}"
+    };
+
+    async function loadData() {
+      // GitHub Pages: data embedded inline (no server needed)
+      try {
+        const [cardsResp, rewardsResp] = await Promise.all([
+          fetch("data/cards.json"),
+          fetch("data/rewards.json")
+        ]);
+        cardsData = await cardsResp.json();
+        rewardsData = await rewardsResp.json();
+      } catch(e) {
+        // Fallback: use inline data if fetch fails
+        console.log("Using inline data");
+      }
+
+      document.getElementById("lastUpdated").textContent =
+        `最後更新：${rewardsData.lastUpdated}`;
+
+      initUI();
+    }
+
+    function initUI() {
+      // Load custom cards from localStorage
+      mergeCustomCards();
+
+      // Populate bank filter
+      const banks = [...new Set(cardsData.map(c => c.bank))];
+      const bankSel = document.getElementById("filterBank");
+      banks.forEach(b => {
+        const opt = document.createElement("option");
+        opt.value = b; opt.textContent = b;
+        bankSel.appendChild(opt);
+      });
+
+      // Populate country grid
+      renderCountryGrid();
+
+      // Populate domestic categories
+      const catSel = document.getElementById("filterDomesticCat");
+      rewardsData.domesticCategories.forEach(cat => {
+        const opt = document.createElement("option");
+        opt.value = cat.id; opt.textContent = cat.name;
+        catSel.appendChild(opt);
+      });
+
+      // Populate calculator country
+      const calcCountrySel = document.getElementById("calcCountry");
+      const cOpt = document.createElement("option");
+      cOpt.value = "domestic"; cOpt.textContent = "國內消費";
+      calcCountrySel.appendChild(cOpt);
+      rewardsData.countries.forEach(c => {
+        const opt = document.createElement("option");
+        opt.value = c.code; opt.textContent = `${FLAG_MAP[c.code] || ""} ${c.name}`;
+        calcCountrySel.appendChild(opt);
+      });
+
+      // Populate compare checkboxes
+      renderCompareChecks();
+
+      // Event listeners
+      document.getElementById("filterNetwork").addEventListener("change", () => renderRanking());
+      document.getElementById("filterBank").addEventListener("change", () => renderRanking());
+      document.getElementById("filterDomesticCat").addEventListener("change", () => renderDomestic());
+
+      // Tabs
+      document.querySelectorAll(".tab-btn").forEach(btn => {
+        btn.addEventListener("click", () => {
+          document.querySelectorAll(".tab-btn").forEach(b => b.classList.remove("active"));
+          document.querySelectorAll(".tab-content").forEach(c => c.style.display = "none");
+          btn.classList.add("active");
+          document.getElementById(`tab-${btn.dataset.tab}`).style.display = "block";
+
+          if (btn.dataset.tab === "domestic") renderDomestic();
+        });
+      });
+
+      // Init merchant tab
+      initMerchantTab();
+
+      // Default: select Japan
+      selectCountry("JP");
+    }
+
+    function renderCountryGrid() {
+      const grid = document.getElementById("countryGrid");
+      grid.innerHTML = "";
+      rewardsData.countries.forEach(country => {
+        const btn = document.createElement("button");
+        btn.className = "country-btn" + (selectedCountry === country.code ? " selected" : "");
+        btn.innerHTML = `<span class="flag">${FLAG_MAP[country.code] || ""}</span>${country.name}`;
+        btn.onclick = () => selectCountry(country.code);
+        grid.appendChild(btn);
+      });
+    }
+
+    function selectCountry(code) {
+      selectedCountry = code;
+      renderCountryGrid();
+      renderRanking();
+    }
+
+    function getCardReward(cardId) {
+      return rewardsData.rewards.find(r => r.cardId === cardId);
+    }
+
+    function getCard(cardId) {
+      return cardsData.find(c => c.id === cardId);
+    }
+
+    function getEffectiveRate(reward, countryCode) {
+      if (!reward) return 0;
+      const overseas = reward.overseas;
+
+      // Check country-specific rate
+      if (overseas.countrySpecific && overseas.countrySpecific[countryCode]) {
+        return overseas.countrySpecific[countryCode];
+      }
+
+      // Check region-specific rate
+      const country = rewardsData.countries.find(c => c.code === countryCode);
+      if (country && overseas.regionSpecific && overseas.regionSpecific[country.region]) {
+        return overseas.regionSpecific[country.region];
+      }
+
+      return overseas.defaultRate;
+    }
+
+    function getNetReward(rate, foreignTxFee) {
+      return Math.round((rate - foreignTxFee) * 100) / 100;
+    }
+
+    function renderRanking() {
+      if (!selectedCountry) return;
+
+      const networkFilter = document.getElementById("filterNetwork").value;
+      const bankFilter = document.getElementById("filterBank").value;
+
+      const list = document.getElementById("rankingList");
+      const country = rewardsData.countries.find(c => c.code === selectedCountry);
+
+      // Build ranking
+      let rankings = cardsData
+        .filter(card => {
+          if (networkFilter && card.network !== networkFilter) return false;
+          if (bankFilter && card.bank !== bankFilter) return false;
+          return true;
+        })
+        .map(card => {
+          const reward = getCardReward(card.id);
+          const rate = reward ? getEffectiveRate(reward, selectedCountry) : 0;
+          const netRate = getNetReward(rate, card.foreignTxFee);
+          return { card, reward, rate, netRate };
+        })
+        .sort((a, b) => b.netRate - a.netRate);
+
+      if (rankings.length === 0) {
+        list.innerHTML = `<div class="empty-state"><div class="icon">🔍</div><p>沒有符合條件的卡片</p></div>`;
+        return;
+      }
+
+      list.innerHTML = `<h2 style="margin-bottom:1rem;">
+        ${FLAG_MAP[selectedCountry] || ""} ${country ? country.name : ""} 最佳刷卡排名
+        <span style="font-size:0.8rem;color:#888;font-weight:normal;">（已扣除海外手續費）</span>
+      </h2>` +
+      rankings.map((item, idx) => {
+        const { card, reward, rate, netRate } = item;
+        const rankClass = idx < 3 ? `rank-${idx + 1}` : "rank-default";
+        const networkClass = `network-${card.network.toLowerCase()}`;
+
+        const promotions = reward?.promotions?.filter(p => {
+          const end = new Date(p.endDate);
+          return end >= new Date();
+        }) || [];
+
+        return `
+        <div class="card-ranking">
+          <div class="rank-header" onclick="toggleDetail('detail-${idx}')">
+            <div class="rank-number ${rankClass}">${idx + 1}</div>
+            <div class="rank-info">
+              <h3>${card.name} <span class="card-network ${networkClass}">${card.network}</span></h3>
+              <span class="bank-name">${card.bank}</span>
+            </div>
+            <div class="reward-rate">
+              ${netRate}% <small>淨回饋</small>
+            </div>
+          </div>
+          <div class="rank-detail" id="detail-${idx}">
+            <div class="detail-grid">
+              <div class="detail-item">
+                <h4>回饋率</h4>
+                <p>${rate}%</p>
+              </div>
+              <div class="detail-item">
+                <h4>海外手續費</h4>
+                <p>${card.foreignTxFee}%</p>
+              </div>
+              <div class="detail-item">
+                <h4>年費</h4>
+                <p>${card.annualFeeNote}</p>
+              </div>
+              <div class="detail-item">
+                <h4>備註</h4>
+                <p>${reward?.overseas?.note || "-"}</p>
+              </div>
+            </div>
+            ${promotions.length > 0 ? `
+            <div style="margin-top:1rem;">
+              <h4 style="font-size:0.85rem;color:#888;margin-bottom:0.5rem;">進行中的活動</h4>
+              ${promotions.map(p => `
+                <div class="promo-tag active">${p.title} (至 ${p.endDate})</div>
+                <div style="font-size:0.85rem;color:#666;margin:0.3rem 0;">${p.description}</div>
+                <div style="font-size:0.8rem;color:#999;">${p.conditions}</div>
+              `).join("")}
+            </div>` : ""}
+          </div>
+        </div>`;
+      }).join("");
+    }
+
+    function toggleDetail(id) {
+      const el = document.getElementById(id);
+      el.classList.toggle("open");
+    }
+
+    function renderDomestic() {
+      const catFilter = document.getElementById("filterDomesticCat").value;
+      const grid = document.getElementById("domesticGrid");
+
+      const CATEGORY_NAMES = {};
+      rewardsData.domesticCategories.forEach(c => { CATEGORY_NAMES[c.id] = c.name; });
+
+      let items = cardsData.map(card => {
+        const reward = getCardReward(card.id);
+        if (!reward) return null;
+
+        const domestic = reward.domestic;
+        let categories = { "一般消費": domestic.general };
+
+        Object.entries(domestic.categories || {}).forEach(([catId, rate]) => {
+          const name = CATEGORY_NAMES[catId] || catId;
+          categories[name] = rate;
+        });
+
+        if (catFilter) {
+          const catName = CATEGORY_NAMES[catFilter];
+          const catRate = domestic.categories?.[catFilter] || domestic.general;
+          return { card, categories: { [catName]: catRate }, maxRate: catRate, note: domestic.note };
+        }
+
+        const maxRate = Math.max(...Object.values(categories));
+        return { card, categories, maxRate, note: domestic.note };
+      }).filter(Boolean);
+
+      items.sort((a, b) => b.maxRate - a.maxRate);
+
+      grid.innerHTML = items.map(item => {
+        const networkClass = `network-${item.card.network.toLowerCase()}`;
+        return `
+        <div class="domestic-card">
+          <h3>${item.card.bank} ${item.card.name}
+            <span class="card-network ${networkClass}">${item.card.network}</span>
+          </h3>
+          <div class="category-rewards">
+            ${Object.entries(item.categories).map(([cat, rate]) => `
+              <div class="cat-row">
+                <span>${cat}</span>
+                <span class="rate">${rate}%</span>
+              </div>
+            `).join("")}
+          </div>
+          <div style="margin-top:0.8rem;font-size:0.85rem;color:#888;">${item.note || ""}</div>
+        </div>`;
+      }).join("");
+    }
+
+    function renderCompareChecks() {
+      const container = document.getElementById("compareChecks");
+      container.innerHTML = cardsData.map(card => `
+        <label class="compare-check">
+          <input type="checkbox" value="${card.id}" onchange="renderCompare()">
+          ${card.bank} ${card.name}
+        </label>
+      `).join("");
+    }
+
+    function renderCompare() {
+      const checked = [...document.querySelectorAll("#compareChecks input:checked")]
+        .map(el => el.value)
+        .slice(0, 5);
+
+      const container = document.getElementById("compareResult");
+
+      if (checked.length < 2) {
+        container.innerHTML = `<div class="empty-state"><div class="icon">📊</div><p>請選擇至少 2 張卡片進行比較</p></div>`;
+        return;
+      }
+
+      const selectedCards = checked.map(id => ({
+        card: getCard(id),
+        reward: getCardReward(id)
+      }));
+
+      // Build comparison rows
+      const rows = [
+        { label: "銀行", fn: item => item.card.bank },
+        { label: "卡組織", fn: item => item.card.network },
+        { label: "年費", fn: item => item.card.annualFeeNote },
+        { label: "海外手續費", fn: item => `${item.card.foreignTxFee}%` },
+        { label: "海外基本回饋", fn: item => `${item.reward?.overseas?.defaultRate || 0}%`, highlight: true },
+        { label: "國內一般回饋", fn: item => `${item.reward?.domestic?.general || 0}%`, highlight: true },
+      ];
+
+      // Add country-specific rows
+      rewardsData.countries.slice(0, 6).forEach(country => {
+        rows.push({
+          label: `${FLAG_MAP[country.code] || ""} ${country.name}`,
+          fn: item => {
+            const rate = item.reward ? getEffectiveRate(item.reward, country.code) : 0;
+            const net = getNetReward(rate, item.card.foreignTxFee);
+            return `${net}%`;
+          },
+          highlight: true
+        });
+      });
+
+      container.innerHTML = `
+      <table class="compare-table">
+        <thead>
+          <tr>
+            <th></th>
+            ${selectedCards.map(item => `<th>${item.card.name}</th>`).join("")}
+          </tr>
+        </thead>
+        <tbody>
+          ${rows.map(row => {
+            const values = selectedCards.map(item => row.fn(item));
+            const numValues = values.map(v => parseFloat(v) || 0);
+            const maxVal = Math.max(...numValues);
+
+            return `<tr>
+              <td>${row.label}</td>
+              ${values.map((val, i) => {
+                const isMax = row.highlight && numValues[i] === maxVal && maxVal > 0;
+                return `<td class="${isMax ? 'highlight' : ''}">${val}</td>`;
+              }).join("")}
+            </tr>`;
+          }).join("")}
+        </tbody>
+      </table>`;
+    }
+
+    function calculate() {
+      const countryCode = document.getElementById("calcCountry").value;
+      const amount = parseFloat(document.getElementById("calcAmount").value) || 0;
+      const container = document.getElementById("calcResults");
+
+      if (amount <= 0) {
+        container.innerHTML = `<p style="color:#999;">請輸入消費金額</p>`;
+        return;
+      }
+
+      let results = cardsData.map(card => {
+        const reward = getCardReward(card.id);
+        if (!reward) return null;
+
+        let rate;
+        if (countryCode === "domestic") {
+          rate = reward.domestic.general;
+        } else {
+          rate = getEffectiveRate(reward, countryCode);
+          rate = getNetReward(rate, card.foreignTxFee);
+        }
+
+        const cashback = Math.round(amount * rate / 100);
+        return { card, rate, cashback };
+      }).filter(Boolean);
+
+      results.sort((a, b) => b.cashback - a.cashback);
+
+      container.innerHTML = results.map(item => `
+        <div class="calc-result-item">
+          <div>
+            <span class="card-name">${item.card.bank} ${item.card.name}</span>
+            <span style="color:#888;font-size:0.85rem;margin-left:0.5rem;">(${item.rate}%)</span>
+          </div>
+          <span class="cashback">回饋 $${item.cashback.toLocaleString()}</span>
+        </div>
+      `).join("");
+    }
+
+    // === Merchant Database ===
+
+    const MERCHANT_DB = [
+      // 網購/數位消費
+      { name: "momo", aliases: ["momo購物","momo購物網"], category: "online", location: "domestic", note: "網購平台" },
+      { name: "蝦皮", aliases: ["Shopee","蝦皮購物"], category: "online", location: "domestic", note: "網購平台" },
+      { name: "PChome", aliases: ["PChome24h","pchome"], category: "online", location: "domestic", note: "網購平台" },
+      { name: "博客來", aliases: [], category: "online", location: "domestic", note: "網購平台" },
+      { name: "Amazon", aliases: ["亞馬遜"], category: "online", location: "overseas", country: "US", note: "海外網購" },
+      { name: "Netflix", aliases: ["網飛"], category: "online", location: "domestic", note: "串流平台（數位消費）" },
+      { name: "Spotify", aliases: [], category: "online", location: "domestic", note: "串流平台（數位消費）" },
+      { name: "YouTube Premium", aliases: ["YT Premium"], category: "online", location: "domestic", note: "串流平台（數位消費）" },
+      { name: "Disney+", aliases: [], category: "online", location: "domestic", note: "串流平台（數位消費）" },
+      { name: "Uber Eats", aliases: ["UberEats","外送"], category: "online", location: "domestic", note: "外送平台（數位消費）" },
+      { name: "foodpanda", aliases: ["熊貓外送"], category: "online", location: "domestic", note: "外送平台（數位消費）" },
+
+      // 超市/量販
+      { name: "Costco", aliases: ["好市多"], category: "supermarket", location: "domestic", note: "量販店" },
+      { name: "全聯", aliases: ["全聯福利中心"], category: "supermarket", location: "domestic", note: "超市" },
+      { name: "家樂福", aliases: ["Carrefour"], category: "supermarket", location: "domestic", note: "量販店" },
+      { name: "大潤發", aliases: [], category: "supermarket", location: "domestic", note: "量販店" },
+      { name: "愛買", aliases: [], category: "supermarket", location: "domestic", note: "量販店" },
+      { name: "IKEA", aliases: ["宜家"], category: "supermarket", location: "domestic", note: "家居量販" },
+
+      // 餐飲
+      { name: "星巴克", aliases: ["Starbucks"], category: "dining", location: "domestic", note: "連鎖餐飲" },
+      { name: "麥當勞", aliases: ["McDonald's"], category: "dining", location: "domestic", note: "連鎖餐飲" },
+      { name: "王品", aliases: [], category: "dining", location: "domestic", note: "餐飲集團" },
+      { name: "鼎泰豐", aliases: [], category: "dining", location: "domestic", note: "餐廳" },
+      { name: "饗食天堂", aliases: [], category: "dining", location: "domestic", note: "吃到飽餐廳" },
+      { name: "餐廳", aliases: ["吃飯","晚餐","午餐","聚餐"], category: "dining", location: "domestic", note: "一般餐飲消費" },
+
+      // 交通/加油
+      { name: "加油", aliases: ["中油","台塑","台亞","加油站"], category: "transport", location: "domestic", note: "加油消費" },
+      { name: "台鐵", aliases: ["火車","火車票"], category: "transport", location: "domestic", note: "交通" },
+      { name: "高鐵", aliases: ["高鐵票","台灣高鐵"], category: "transport", location: "domestic", note: "交通" },
+      { name: "停車", aliases: ["停車費","停車場"], category: "transport", location: "domestic", note: "交通" },
+      { name: "Uber", aliases: ["叫車"], category: "transport", location: "domestic", note: "叫車平台" },
+
+      // 超商
+      { name: "7-11", aliases: ["7-ELEVEN","小七","統一超商"], category: "convenience", location: "domestic", note: "超商" },
+      { name: "全家", aliases: ["FamilyMart","全家便利商店"], category: "convenience", location: "domestic", note: "超商" },
+      { name: "萊爾富", aliases: ["Hi-Life"], category: "convenience", location: "domestic", note: "超商" },
+      { name: "OK超商", aliases: ["OK"], category: "convenience", location: "domestic", note: "超商" },
+
+      // 行動支付
+      { name: "LINE Pay", aliases: ["LinePay"], category: "mobile_pay", location: "domestic", note: "行動支付" },
+      { name: "Apple Pay", aliases: ["ApplePay"], category: "mobile_pay", location: "domestic", note: "行動支付" },
+      { name: "Google Pay", aliases: ["GooglePay","GPay"], category: "mobile_pay", location: "domestic", note: "行動支付" },
+      { name: "街口支付", aliases: ["街口"], category: "mobile_pay", location: "domestic", note: "行動支付" },
+      { name: "台灣Pay", aliases: ["台灣pay"], category: "mobile_pay", location: "domestic", note: "行動支付" },
+
+      // 海外實體消費（依國家）
+      { name: "日本藥妝", aliases: ["松本清","唐吉軻德","驚安殿堂","大國藥妝","日本購物"], category: "general", location: "overseas", country: "JP", note: "日本實體消費" },
+      { name: "日本百貨", aliases: ["三越","伊勢丹","高島屋","阪急百貨"], category: "general", location: "overseas", country: "JP", note: "日本百貨消費" },
+      { name: "韓國免稅", aliases: ["樂天免稅","新羅免稅","韓國購物"], category: "general", location: "overseas", country: "KR", note: "韓國消費" },
+      { name: "泰國消費", aliases: ["泰國購物","曼谷"], category: "general", location: "overseas", country: "TH", note: "泰國消費" },
+      { name: "歐洲購物", aliases: ["歐洲名牌","歐洲outlet"], category: "general", location: "overseas", country: "FR", note: "歐洲消費" },
+      { name: "美國購物", aliases: ["美國outlet","美國代購"], category: "general", location: "overseas", country: "US", note: "美國消費" },
+
+      // 旅遊
+      { name: "機票", aliases: ["買機票","訂機票","航空公司"], category: "online", location: "overseas", note: "機票（通常為海外交易）" },
+      { name: "Agoda", aliases: [], category: "online", location: "overseas", note: "訂房平台（海外交易）" },
+      { name: "Booking.com", aliases: ["Booking"], category: "online", location: "overseas", note: "訂房平台（海外交易）" },
+      { name: "Hotels.com", aliases: [], category: "online", location: "overseas", note: "訂房平台（海外交易）" },
+      { name: "Klook", aliases: ["客路"], category: "online", location: "overseas", note: "旅遊平台（部分海外交易）" },
+      { name: "KKday", aliases: [], category: "online", location: "overseas", note: "旅遊平台" },
+    ];
+
+    const HOT_MERCHANTS = [
+      "Costco", "全聯", "momo", "Netflix", "加油", "星巴克",
+      "7-11", "日本藥妝", "蝦皮", "Uber Eats", "Agoda", "LINE Pay",
+    ];
+
+    function initMerchantTab() {
+      const container = document.getElementById("hotMerchants");
+      container.innerHTML = HOT_MERCHANTS.map(m =>
+        `<button class="hot-tag" onclick="document.getElementById('merchantQuery').value='${m}';searchMerchant();">${m}</button>`
+      ).join("");
+
+      document.getElementById("merchantQuery").addEventListener("keydown", e => {
+        if (e.key === "Enter") searchMerchant();
+      });
+    }
+
+    function searchMerchant() {
+      const query = document.getElementById("merchantQuery").value.trim();
+      if (!query) { alert("請輸入商家或商品名稱"); return; }
+
+      const resultDiv = document.getElementById("merchantResult");
+      const matchInfo = document.getElementById("merchantMatchInfo");
+      const rankingDiv = document.getElementById("merchantRanking");
+      const webDiv = document.getElementById("merchantWebResults");
+
+      // Fetch web recommendations in background (only works with local server)
+      webDiv.innerHTML = "";
+      fetchMerchantWeb(query);
+
+      // Find matching merchant
+      let match = null;
+      const lowerQ = query.toLowerCase();
+
+      for (const m of MERCHANT_DB) {
+        if (m.name.toLowerCase().includes(lowerQ) || lowerQ.includes(m.name.toLowerCase())) {
+          match = m; break;
+        }
+        for (const alias of m.aliases) {
+          if (alias.toLowerCase().includes(lowerQ) || lowerQ.includes(alias.toLowerCase())) {
+            match = m; break;
+          }
+        }
+        if (match) break;
+      }
+
+      // Fallback: try keyword matching to category
+      if (!match) {
+        const keywordMap = {
+          "網購": "online", "線上": "online", "購物": "online", "電商": "online",
+          "串流": "online", "訂閱": "online",
+          "超市": "supermarket", "量販": "supermarket", "賣場": "supermarket",
+          "吃": "dining", "餐": "dining", "飯": "dining", "咖啡": "dining", "飲料": "dining",
+          "油": "transport", "車": "transport", "交通": "transport", "捷運": "transport", "公車": "transport",
+          "超商": "convenience", "便利": "convenience",
+          "支付": "mobile_pay", "Pay": "mobile_pay", "pay": "mobile_pay",
+          "日本": "JP_overseas", "韓國": "KR_overseas", "泰國": "TH_overseas",
+          "美國": "US_overseas", "歐洲": "EU_overseas",
+        };
+
+        for (const [kw, cat] of Object.entries(keywordMap)) {
+          if (query.includes(kw)) {
+            if (cat.endsWith("_overseas")) {
+              const countryCode = cat.split("_")[0] === "EU" ? "FR" : cat.split("_")[0];
+              match = { name: query, category: "general", location: "overseas", country: countryCode, note: "海外消費" };
+            } else {
+              match = { name: query, category: cat, location: "domestic", note: "" };
+            }
+            break;
+          }
+        }
+      }
+
+      // Still no match - treat as general domestic
+      if (!match) {
+        match = { name: query, category: "general", location: "domestic", note: "無法精確分類，以一般消費計算" };
+      }
+
+      resultDiv.style.display = "block";
+
+      // Build match info
+      const CATEGORY_NAMES = {};
+      rewardsData.domesticCategories.forEach(c => { CATEGORY_NAMES[c.id] = c.name; });
+
+      const catName = CATEGORY_NAMES[match.category] || "一般消費";
+
+      matchInfo.innerHTML = `
+        <div class="merchant-match">
+          <h3>${match.name}</h3>
+          <span class="match-category">${catName}</span>
+          ${match.location === "overseas" ? '<span class="match-category" style="background:#fff3cd;color:#856404;margin-left:0.5rem;">海外交易</span>' : '<span class="match-category" style="background:#e3f2fd;color:#1565c0;margin-left:0.5rem;">國內交易</span>'}
+          ${match.note ? `<div class="match-note">${match.note}</div>` : ""}
+        </div>
+      `;
+
+      // Build card ranking for this merchant
+      let rankings = cardsData.map(card => {
+        const reward = getCardReward(card.id);
+        if (!reward) return null;
+
+        let rate = 0;
+        let rateSource = "";
+
+        if (match.location === "overseas") {
+          // Overseas merchant
+          const countryCode = match.country || "US";
+          rate = getEffectiveRate(reward, countryCode);
+          const net = getNetReward(rate, card.foreignTxFee);
+          rateSource = `海外回饋 ${rate}% - 手續費 ${card.foreignTxFee}% = 淨 ${net}%`;
+          rate = net;
+        } else {
+          // Domestic merchant - check category-specific rate first
+          const catRate = reward.domestic.categories?.[match.category];
+          if (catRate && catRate > 0) {
+            rate = catRate;
+            rateSource = `${catName}通路回饋 ${rate}%`;
+          } else {
+            rate = reward.domestic.general;
+            rateSource = `一般消費回饋 ${rate}%`;
+          }
+        }
+
+        // Special: Costco cards
+        if (match.name.includes("Costco") || match.name.includes("好市多")) {
+          if (card.id.includes("costco")) {
+            const costcoRate = reward.domestic.categories?.supermarket || rate;
+            if (costcoRate > rate) {
+              rate = costcoRate;
+              rateSource = `Costco 聯名卡專屬回饋 ${rate}%`;
+            }
+          }
+        }
+
+        return { card, reward, rate, rateSource, isCustom: card._custom };
+      }).filter(Boolean);
+
+      rankings.sort((a, b) => b.rate - a.rate);
+
+      rankingDiv.innerHTML = `
+        <h2 style="margin-bottom:1rem;">在「${match.name}」消費的最佳卡片排名</h2>
+      ` + rankings.map((item, idx) => {
+        const { card, rate, rateSource, isCustom } = item;
+        const rankClass = idx < 3 ? `rank-${idx + 1}` : "rank-default";
+        const networkClass = `network-${card.network.toLowerCase()}`;
+
+        return `
+        <div class="card-ranking">
+          <div class="rank-header" onclick="toggleDetail('merchant-detail-${idx}')">
+            <div class="rank-number ${rankClass}">${idx + 1}</div>
+            <div class="rank-info">
+              <h3>${card.name}
+                <span class="card-network ${networkClass}">${card.network}</span>
+                ${isCustom ? '<span class="custom-badge">自訂</span>' : ''}
+              </h3>
+              <span class="bank-name">${card.bank}</span>
+            </div>
+            <div class="reward-rate">
+              ${rate}% <small>回饋</small>
+            </div>
+          </div>
+          <div class="rank-detail" id="merchant-detail-${idx}">
+            <div style="padding:0.8rem;background:#f8f9fa;border-radius:8px;margin-top:0.8rem;">
+              <div style="font-size:0.9rem;color:#555;">${rateSource}</div>
+              <div style="font-size:0.85rem;color:#888;margin-top:0.3rem;">年費：${card.annualFeeNote}</div>
+            </div>
+          </div>
+        </div>`;
+      }).join("");
+    }
+
+    async function fetchMerchantWeb(merchant) {
+      const webDiv = document.getElementById("merchantWebResults");
+      try {
+        const resp = await fetch(`/api/merchant?q=${encodeURIComponent(merchant)}`);
+        const data = await resp.json();
+
+        if (data.error && !data.recommendations?.length) {
+          webDiv.innerHTML = `<div style="background:white;border-radius:12px;padding:1.2rem;box-shadow:0 2px 8px rgba(0,0,0,0.06);">
+            <h3 style="margin-bottom:0.5rem;">網路推薦</h3>
+            <p style="color:#888;font-size:0.9rem;">${data.error}</p>
+          </div>`;
+          return;
+        }
+
+        const recs = data.recommendations || [];
+        if (recs.length === 0) {
+          webDiv.innerHTML = `<div style="background:white;border-radius:12px;padding:1.2rem;box-shadow:0 2px 8px rgba(0,0,0,0.06);">
+            <h3 style="margin-bottom:0.5rem;">網路推薦</h3>
+            <p style="color:#888;font-size:0.9rem;">未找到相關網路推薦資訊</p>
+          </div>`;
+          return;
+        }
+
+        webDiv.innerHTML = `
+          <div style="background:white;border-radius:12px;padding:1.2rem;box-shadow:0 2px 8px rgba(0,0,0,0.06);border-left:4px solid #e67e22;">
+            <h3 style="margin-bottom:0.8rem;">網路搜尋結果 — 其他推薦卡片</h3>
+            <p style="font-size:0.8rem;color:#888;margin-bottom:0.8rem;">以下資訊來自 Money101、Google 等網路來源，僅供參考</p>
+            ${recs.map((r, i) => `
+              <div style="padding:0.7rem;background:${i % 2 === 0 ? '#fffbf0' : '#fff'};border-radius:8px;margin-bottom:0.5rem;display:flex;justify-content:space-between;align-items:flex-start;gap:1rem;">
+                <div style="flex:1;font-size:0.9rem;color:#444;line-height:1.5;">${r.text}</div>
+                <div style="font-weight:bold;color:#e74c3c;font-size:1.1rem;white-space:nowrap;">${r.rate}%</div>
+              </div>
+            `).join("")}
+            <p style="font-size:0.8rem;color:#aaa;margin-top:0.8rem;">可在「自訂卡片」分頁搜尋並新增這些卡片到系統中</p>
+          </div>
+        `;
+      } catch (err) {
+        webDiv.innerHTML = `<div style="background:white;border-radius:12px;padding:1.2rem;box-shadow:0 2px 8px rgba(0,0,0,0.06);">
+          <h3 style="margin-bottom:0.5rem;">網路推薦</h3>
+          <p style="color:#888;font-size:0.9rem;">搜尋失敗：${err.message}（請確認伺服器已啟動）</p>
+        </div>`;
+      }
+    }
+
+    // === Search Functions ===
+
+    let lastSearchResult = null;
+
+    // Curated popular cards database (updated by scraper weekly, fallback if web search fails)
+    const POPULAR_CARDS = {
+      "樂天信用卡": { bank: "樂天銀行", name: "樂天信用卡", network: "JCB", overseasRate: 3, domesticRate: 1.22, foreignFee: 1.5, note: "日本消費最高5%，海外3%", url: "https://card.rakuten.com.tw/" },
+      "樂天": { bank: "樂天銀行", name: "樂天信用卡", network: "JCB", overseasRate: 3, domesticRate: 1.22, foreignFee: 1.5, note: "日本消費最高5%，海外3%", url: "https://card.rakuten.com.tw/" },
+      "國泰CUBE": { bank: "國泰世華", name: "CUBE卡", network: "Mastercard", overseasRate: 3, domesticRate: 1, foreignFee: 1.5, note: "精選任務日韓3%，需App選任務", url: "https://www.cathaybk.com.tw/cathaybk/personal/product/credit-card/cards/cube/" },
+      "CUBE卡": { bank: "國泰世華", name: "CUBE卡", network: "Mastercard", overseasRate: 3, domesticRate: 1, foreignFee: 1.5, note: "精選任務日韓3%，需App選任務", url: "https://www.cathaybk.com.tw/cathaybk/personal/product/credit-card/cards/cube/" },
+      "玉山U Bear": { bank: "玉山銀行", name: "U Bear信用卡", network: "Mastercard", overseasRate: 3, domesticRate: 1, foreignFee: 1.5, note: "網購/行動支付最高10%，海外3%", url: "https://www.esunbank.com.tw/bank/personal/credit-card" },
+      "U Bear": { bank: "玉山銀行", name: "U Bear信用卡", network: "Mastercard", overseasRate: 3, domesticRate: 1, foreignFee: 1.5, note: "網購/行動支付最高10%，海外3%", url: "https://www.esunbank.com.tw/bank/personal/credit-card" },
+      "台新GoGo": { bank: "台新銀行", name: "GoGo卡", network: "Visa", overseasRate: 2.8, domesticRate: 0.5, foreignFee: 1.5, note: "數位通路/行動支付3.8%，海外2.8%", url: "https://www.taishinbank.com.tw/" },
+      "GoGo卡": { bank: "台新銀行", name: "GoGo卡", network: "Visa", overseasRate: 2.8, domesticRate: 0.5, foreignFee: 1.5, note: "數位通路/行動支付3.8%，海外2.8%", url: "https://www.taishinbank.com.tw/" },
+      "台新FLY": { bank: "台新銀行", name: "@GOGO FLY卡", network: "JCB", overseasRate: 3, domesticRate: 1, foreignFee: 1.5, note: "日韓最高6%，其他海外3%", url: "https://www.taishinbank.com.tw/" },
+      "中信Flygo": { bank: "中國信託", name: "Flygo飛狗卡", network: "Visa", overseasRate: 2.8, domesticRate: 1, foreignFee: 1.5, note: "全球海外2.8%，需登錄", url: "https://www.ctbcbank.com/twrbo/zh_tw/index/card-credit/card-credit.html" },
+      "飛狗卡": { bank: "中國信託", name: "Flygo飛狗卡", network: "Visa", overseasRate: 2.8, domesticRate: 1, foreignFee: 1.5, note: "全球海外2.8%，需登錄", url: "https://www.ctbcbank.com/twrbo/zh_tw/index/card-credit/card-credit.html" },
+      "永豐DAWHO": { bank: "永豐銀行", name: "DAWHO大戶卡", network: "Mastercard", overseasRate: 3, domesticRate: 3, foreignFee: 1.5, note: "大戶等級享國內外3%", url: "https://bank.sinopac.com/sinopacBT/personal/credit-card/introduction/DAWHO.html" },
+      "大戶卡": { bank: "永豐銀行", name: "DAWHO大戶卡", network: "Mastercard", overseasRate: 3, domesticRate: 3, foreignFee: 1.5, note: "大戶等級享國內外3%", url: "https://bank.sinopac.com/sinopacBT/personal/credit-card/introduction/DAWHO.html" },
+      "富邦Costco": { bank: "富邦銀行", name: "Costco聯名卡", network: "Mastercard", overseasRate: 5, domesticRate: 1, foreignFee: 1.5, note: "Costco賣場最高2%，海外實體5%", url: "https://www.fubon.com/banking/personal/credit_card/all_cards/all_cards.htm" },
+      "聯邦賴點卡": { bank: "聯邦銀行", name: "賴點卡", network: "JCB", overseasRate: 2, domesticRate: 2, foreignFee: 1.5, note: "國內外2% LINE Points，日本3.5%", url: "https://card.ubot.com.tw/" },
+      "賴點卡": { bank: "聯邦銀行", name: "賴點卡", network: "JCB", overseasRate: 2, domesticRate: 2, foreignFee: 1.5, note: "國內外2% LINE Points，日本3.5%", url: "https://card.ubot.com.tw/" },
+      "匯豐旅人卡": { bank: "匯豐銀行", name: "旅人卡", network: "Visa", overseasRate: 2.22, domesticRate: 1.22, foreignFee: 1.5, note: "海外2.22%，自動回饋無需登錄", url: "https://www.hsbc.com.tw/credit-cards/" },
+      "星展飛行卡": { bank: "星展銀行", name: "飛行卡", network: "Visa", overseasRate: 2.5, domesticRate: 1.2, foreignFee: 1.5, note: "海外2.5%，可累積哩程", url: "https://www.dbs.com.tw/personal-zh/cards/credit-cards.page" },
+      "富邦OpenLife": { bank: "富邦銀行", name: "OpenLife卡", network: "Visa", overseasRate: 2, domesticRate: 2, foreignFee: 1.5, note: "國內外2%", url: "https://www.fubon.com/banking/personal/credit_card/all_cards/all_cards.htm" },
+      "momo聯名卡": { bank: "富邦銀行", name: "momo聯名卡", network: "Mastercard", overseasRate: 5, domesticRate: 3, foreignFee: 1.5, note: "momo站內3~7%，海外實體/旅遊最高5%", url: "https://www.fubon.com/banking/personal/credit_card/all_cards/all_cards.htm" },
+      "新光悠遊": { bank: "新光銀行", name: "悠遊聯名卡", network: "Visa", overseasRate: 1, domesticRate: 1, foreignFee: 1.5, note: "一般消費1%", url: "https://www.skbank.com.tw/credit_card" },
+      "元大鑽金卡": { bank: "元大銀行", name: "鑽金卡", network: "Visa", overseasRate: 3, domesticRate: 1.2, foreignFee: 1.5, note: "海外3%，國內1.2%", url: "https://www.yuantabank.com.tw/bank/credit-card/" },
+      "凱基魔BUY": { bank: "凱基銀行", name: "魔BUY卡", network: "Mastercard", overseasRate: 3, domesticRate: 1.2, foreignFee: 1.5, note: "海外3%，指定通路加碼", url: "https://www.kgibank.com/personal/card/credit" },
+      // 玉山系列
+      "玉山Only": { bank: "玉山銀行", name: "Only卡", network: "Visa", overseasRate: 1.2, domesticRate: 1.2, foreignFee: 1.5, note: "國內外1.2%無腦刷", url: "https://www.esunbank.com.tw/bank/personal/credit-card" },
+      "Only卡": { bank: "玉山銀行", name: "Only卡", network: "Visa", overseasRate: 1.2, domesticRate: 1.2, foreignFee: 1.5, note: "國內外1.2%無腦刷", url: "https://www.esunbank.com.tw/bank/personal/credit-card" },
+      "玉山Pi": { bank: "玉山銀行", name: "Pi拍錢包信用卡", network: "Visa", overseasRate: 2.5, domesticRate: 2.5, foreignFee: 1.5, note: "P幣2.5%回饋", url: "https://www.esunbank.com.tw/bank/personal/credit-card" },
+      "Pi拍錢包": { bank: "玉山銀行", name: "Pi拍錢包信用卡", network: "Visa", overseasRate: 2.5, domesticRate: 2.5, foreignFee: 1.5, note: "P幣2.5%回饋", url: "https://www.esunbank.com.tw/bank/personal/credit-card" },
+      "玉山藥師": { bank: "玉山銀行", name: "藥師公會聯名卡", network: "Visa", overseasRate: 1.2, domesticRate: 1.2, foreignFee: 1.5, note: "藥師公會聯名，一般消費約1.2%", url: "https://www.esunbank.com.tw/bank/personal/credit-card" },
+      "藥師玉山": { bank: "玉山銀行", name: "藥師公會聯名卡", network: "Visa", overseasRate: 1.2, domesticRate: 1.2, foreignFee: 1.5, note: "藥師公會聯名，一般消費約1.2%", url: "https://www.esunbank.com.tw/bank/personal/credit-card" },
+      "藥師卡": { bank: "玉山銀行", name: "藥師公會聯名卡", network: "Visa", overseasRate: 1.2, domesticRate: 1.2, foreignFee: 1.5, note: "藥師公會聯名，一般消費約1.2%", url: "https://www.esunbank.com.tw/bank/personal/credit-card" },
+      // 中信系列
+      "中信LINE Pay": { bank: "中國信託", name: "LINE Pay卡", network: "Visa", overseasRate: 1, domesticRate: 1, foreignFee: 1.5, note: "LINE Pay消費最高3%", url: "https://www.ctbcbank.com/twrbo/zh_tw/index/card-credit/card-credit.html" },
+      "LINE Pay卡": { bank: "中國信託", name: "LINE Pay卡", network: "Visa", overseasRate: 1, domesticRate: 1, foreignFee: 1.5, note: "LINE Pay消費最高3%", url: "https://www.ctbcbank.com/twrbo/zh_tw/index/card-credit/card-credit.html" },
+      "中信現金回饋": { bank: "中國信託", name: "現金回饋御璽卡", network: "Visa", overseasRate: 2, domesticRate: 0.5, foreignFee: 1.5, note: "海外2%，國內0.5%", url: "https://www.ctbcbank.com/twrbo/zh_tw/index/card-credit/card-credit.html" },
+      // 國泰系列
+      "國泰Costco": { bank: "國泰世華", name: "Costco聯名卡", network: "Mastercard", overseasRate: 2, domesticRate: 1, foreignFee: 1.5, note: "Costco消費3%，海外2%", url: "https://www.cathaybk.com.tw/cathaybk/personal/product/credit-card/cards/costco/" },
+      "國泰世華現金回饋": { bank: "國泰世華", name: "現金回饋御璽卡", network: "Mastercard", overseasRate: 1.5, domesticRate: 0.5, foreignFee: 1.5, note: "海外1.5%，國內0.5%", url: "https://www.cathaybk.com.tw/cathaybk/personal/product/credit-card/cards/" },
+      // 台新系列
+      "台新Richart": { bank: "台新銀行", name: "Richart FlyGo卡", network: "Visa", overseasRate: 2.8, domesticRate: 0.5, foreignFee: 1.5, note: "海外2.8%", url: "https://www.taishinbank.com.tw/" },
+      // 永豐系列
+      "永豐Sport": { bank: "永豐銀行", name: "Sport卡", network: "Mastercard", overseasRate: 2, domesticRate: 2, foreignFee: 1.5, note: "國內外2%，指定通路3%", url: "https://bank.sinopac.com/sinopacBT/personal/credit-card/overview.html" },
+      "Sport卡": { bank: "永豐銀行", name: "Sport卡", network: "Mastercard", overseasRate: 2, domesticRate: 2, foreignFee: 1.5, note: "國內外2%，指定通路3%", url: "https://bank.sinopac.com/sinopacBT/personal/credit-card/overview.html" },
+      "永豐幣倍卡": { bank: "永豐銀行", name: "幣倍卡", network: "Mastercard", overseasRate: 3, domesticRate: 2, foreignFee: 1.5, note: "海外3%，國內行動支付2%", url: "https://bank.sinopac.com/sinopacBT/personal/credit-card/overview.html" },
+      "幣倍卡": { bank: "永豐銀行", name: "幣倍卡", network: "Mastercard", overseasRate: 3, domesticRate: 2, foreignFee: 1.5, note: "海外3%，國內行動支付2%", url: "https://bank.sinopac.com/sinopacBT/personal/credit-card/overview.html" },
+    };
+
+    // Bank official URLs for fallback
+    const BANK_URLS = {
+      "中國信託": "https://www.ctbcbank.com/twrbo/zh_tw/index/card-credit/card-credit.html",
+      "玉山銀行": "https://www.esunbank.com.tw/bank/personal/credit-card",
+      "國泰世華": "https://www.cathaybk.com.tw/cathaybk/personal/product/credit-card/cards/",
+      "台新銀行": "https://www.taishinbank.com.tw",
+      "富邦銀行": "https://www.fubon.com/banking/personal/credit_card/all_cards/all_cards.htm",
+      "永豐銀行": "https://bank.sinopac.com/sinopacBT/personal/credit-card/overview.html",
+      "聯邦銀行": "https://card.ubot.com.tw/eCard/doCreditCard",
+      "星展銀行": "https://www.dbs.com.tw/personal-zh/cards/credit-cards.page",
+      "匯豐銀行": "https://www.hsbc.com.tw/credit-cards/",
+      "樂天銀行": "https://card.rakuten.com.tw",
+      "新光銀行": "https://www.skbank.com.tw/credit_card",
+      "元大銀行": "https://www.yuantabank.com.tw/bank/credit-card/",
+      "凱基銀行": "https://www.kgibank.com/personal/card/credit",
+      "華南銀行": "https://www.hncb.com.tw/personal/credit_card.shtml",
+      "第一銀行": "https://www.firstbank.com.tw/sites/fcb/creditcard",
+      "兆豐銀行": "https://www.megabank.com.tw/personal/credit-card",
+      "合庫銀行": "https://www.tcb-bank.com.tw/personal-banking/credit-card",
+      "渣打銀行": "https://www.sc.com/tw/credit-cards/",
+    };
+
+    function updateBankLink(url) {
+      const btn = document.getElementById("openBankSiteBtn");
+      if (url) {
+        btn.href = url;
+        btn.style.display = "inline-block";
+      } else {
+        btn.style.display = "none";
+      }
+    }
+
+    async function searchCard() {
+      const query = document.getElementById("searchCardQuery").value.trim();
+      if (!query) { alert("請輸入卡片名稱"); return; }
+
+      const btn = document.getElementById("searchBtn");
+      const status = document.getElementById("searchStatus");
+      const resultsDiv = document.getElementById("searchResults");
+
+      btn.disabled = true;
+      btn.textContent = "搜尋中...";
+      status.style.display = "block";
+      status.textContent = "正在從 Money101、卡優新聞網搜尋中...";
+      resultsDiv.style.display = "none";
+
+      try {
+        // Check curated database first (instant, always accurate)
+        let data = null;
+        const lowerQ = query.toLowerCase();
+        for (const [key, card] of Object.entries(POPULAR_CARDS)) {
+          if (key.toLowerCase().includes(lowerQ) || lowerQ.includes(key.toLowerCase())) {
+            data = { ...card, rawTexts: [`資料來源：內建資料庫（${card.note}）`], _bankUrl: card.url };
+            break;
+          }
+        }
+
+        // If not found in curated DB, try server API (local only) or show manual input prompt
+        if (!data) {
+          try {
+            status.textContent = "內建資料庫無此卡片，正在搜尋...";
+            const resp = await fetch(`/api/search?q=${encodeURIComponent(query)}`);
+            data = await resp.json();
+            if (data.bank && BANK_URLS[data.bank]) {
+              data._bankUrl = BANK_URLS[data.bank];
+            }
+          } catch(e) {
+            // No server available (GitHub Pages) - parse bank from query and show manual input
+            const bankKw = {"中信":"中國信託","玉山":"玉山銀行","國泰":"國泰世華","台新":"台新銀行","富邦":"富邦銀行","永豐":"永豐銀行","聯邦":"聯邦銀行","星展":"星展銀行","匯豐":"匯豐銀行","樂天":"樂天銀行","新光":"新光銀行","元大":"元大銀行","凱基":"凱基銀行"};
+            let bank = "", name = query;
+            for (const [kw, bk] of Object.entries(bankKw)) {
+              if (query.includes(kw)) { bank = bk; name = query.replace(kw,"").replace("銀行","").replace("信用卡","").trim(); break; }
+            }
+            data = { bank, name: name || query, network: "Visa", overseasRate: 0, domesticRate: 0, foreignFee: 1.5, rawTexts: [], _bankUrl: BANK_URLS[bank] || "" };
+          }
+        }
+
+        if (data.error) {
+          status.textContent = data.error;
+          return;
+        }
+
+        lastSearchResult = data;
+
+        const content = document.getElementById("searchResultContent");
+        const hasData = data.bank || data.overseasRate > 0 || data.domesticRate > 0 || data.rawTexts.length > 0;
+
+        if (!hasData) {
+          status.textContent = "未找到相關資訊，請手動輸入或嘗試其他關鍵字";
+          return;
+        }
+
+        status.style.display = "none";
+        resultsDiv.style.display = "block";
+
+        // Show bank site link if available
+        updateBankLink(data._bankUrl || data.url || null);
+
+        let html = '<div style="background:#f8f9fa;padding:1rem;border-radius:8px;">';
+
+        if (data.bank) html += `<div><strong>銀行：</strong>${data.bank}</div>`;
+        if (data.name) html += `<div><strong>卡名：</strong>${data.name}</div>`;
+        html += `<div><strong>卡組織：</strong>${data.network}</div>`;
+
+        const hasRates = data.overseasRate > 0 || data.domesticRate > 0;
+
+        if (hasRates) {
+          if (data.overseasRate > 0)
+            html += `<div><strong>海外回饋：</strong><span style="color:#e74c3c;font-weight:bold;">${data.overseasRate}%</span></div>`;
+          if (data.domesticRate > 0)
+            html += `<div><strong>國內回饋：</strong><span style="color:#e74c3c;font-weight:bold;">${data.domesticRate}%</span></div>`;
+          html += `<div><strong>海外手續費：</strong>${data.foreignFee}%</div>`;
+        } else {
+          html += `<div style="color:#c0392b;padding:0.8rem;background:#fef0f0;border-radius:8px;margin:0.5rem 0;">
+            <strong>未找到正確的回饋率</strong><br>
+            <span style="font-size:0.85rem;">建議點「前往官網確認」查看正確資訊，再手動填入下方表單</span>
+          </div>`;
+        }
+
+        if (data.rawTexts && data.rawTexts.length > 0) {
+          html += `<div style="margin-top:0.8rem;"><strong>找到的相關資訊：</strong></div>`;
+          html += '<ul style="font-size:0.85rem;color:#555;margin-top:0.3rem;padding-left:1.2rem;">';
+          data.rawTexts.forEach(t => { html += `<li style="margin-bottom:0.3rem;">${t}</li>`; });
+          html += '</ul>';
+        }
+
+        html += '</div>';
+        content.innerHTML = html;
+
+      } catch (err) {
+        status.textContent = `搜尋失敗：${err.message}`;
+      } finally {
+        btn.disabled = false;
+        btn.textContent = "搜尋";
+      }
+    }
+
+    function applySearchResult() {
+      if (!lastSearchResult) return;
+      const d = lastSearchResult;
+
+      if (d.bank) document.getElementById("customBank").value = d.bank;
+      if (d.name) document.getElementById("customName").value = d.name;
+      if (d.network) document.getElementById("customNetwork").value = d.network;
+      if (d.overseasRate > 0) document.getElementById("customOverseasRate").value = d.overseasRate;
+      if (d.domesticRate > 0) document.getElementById("customDomesticRate").value = d.domesticRate;
+      if (d.foreignFee) document.getElementById("customForeignFee").value = d.foreignFee;
+      if (d.note) document.getElementById("customNote").value = d.note;
+
+      // Scroll to form
+      document.querySelector(".custom-form:last-of-type").scrollIntoView({ behavior: "smooth" });
+    }
+
+    // Allow Enter key to trigger search
+    document.addEventListener("DOMContentLoaded", () => {
+      const searchInput = document.getElementById("searchCardQuery");
+      if (searchInput) {
+        searchInput.addEventListener("keydown", e => {
+          if (e.key === "Enter") searchCard();
+        });
+      }
+    });
+
+    // === Custom Card Functions ===
+
+    function loadCustomCards() {
+      try {
+        return JSON.parse(localStorage.getItem("customCards") || "[]");
+      } catch { return []; }
+    }
+
+    function saveCustomCards(cards) {
+      localStorage.setItem("customCards", JSON.stringify(cards));
+    }
+
+    function mergeCustomCards() {
+      const customs = loadCustomCards();
+
+      // Remove previously merged custom cards
+      cardsData = cardsData.filter(c => !c._custom);
+      rewardsData.rewards = rewardsData.rewards.filter(r => !r._custom);
+
+      customs.forEach(cc => {
+        cardsData.push({
+          id: cc.id,
+          bank: cc.bank,
+          name: cc.name,
+          network: cc.network,
+          annualFee: 0,
+          annualFeeNote: cc.feeNote,
+          image: "",
+          baseReward: `國內 ${cc.domesticRate}%、海外 ${cc.overseasRate}%`,
+          foreignTxFee: cc.foreignFee,
+          features: [],
+          _custom: true
+        });
+
+        const countrySpecific = {};
+        (cc.countryRates || []).forEach(cr => {
+          countrySpecific[cr.code] = cr.rate;
+        });
+
+        rewardsData.rewards.push({
+          cardId: cc.id,
+          overseas: {
+            defaultRate: cc.overseasRate,
+            countrySpecific,
+            regionSpecific: {},
+            note: cc.note || `海外消費 ${cc.overseasRate}%`
+          },
+          domestic: {
+            general: cc.domesticRate,
+            categories: {},
+            note: cc.note || `國內消費 ${cc.domesticRate}%`
+          },
+          promotions: [],
+          _custom: true
+        });
+      });
+    }
+
+    function addCountryRateRow() {
+      const container = document.getElementById("countryRateRows");
+      const idx = container.children.length;
+      const options = rewardsData.countries.map(c =>
+        `<option value="${c.code}">${FLAG_MAP[c.code] || ""} ${c.name}</option>`
+      ).join("");
+
+      const row = document.createElement("div");
+      row.className = "country-rate-row";
+      row.innerHTML = `
+        <div class="filter-group">
+          <label>國家</label>
+          <select>${options}</select>
+        </div>
+        <div class="filter-group">
+          <label>回饋率 (%)</label>
+          <input type="number" step="0.1" placeholder="例：5.0">
+        </div>
+        <button class="btn-danger" onclick="this.parentElement.remove()">移除</button>
+      `;
+      container.appendChild(row);
+    }
+
+    function saveCustomCard() {
+      const bank = document.getElementById("customBank").value.trim();
+      const name = document.getElementById("customName").value.trim();
+
+      if (!bank || !name) {
+        alert("請填寫銀行名稱和卡片名稱");
+        return;
+      }
+
+      const network = document.getElementById("customNetwork").value;
+      const feeNote = document.getElementById("customFeeNote").value.trim() || "免年費";
+      const foreignFee = parseFloat(document.getElementById("customForeignFee").value) || 1.5;
+      const overseasRate = parseFloat(document.getElementById("customOverseasRate").value) || 0;
+      const domesticRate = parseFloat(document.getElementById("customDomesticRate").value) || 0;
+      const note = document.getElementById("customNote").value.trim();
+
+      // Collect country-specific rates
+      const countryRates = [];
+      document.querySelectorAll("#countryRateRows .country-rate-row").forEach(row => {
+        const code = row.querySelector("select").value;
+        const rate = parseFloat(row.querySelector("input").value) || 0;
+        if (rate > 0) countryRates.push({ code, rate });
+      });
+
+      const id = `custom-${bank}-${name}-${Date.now()}`.toLowerCase().replace(/\s+/g, "-");
+
+      const customs = loadCustomCards();
+      customs.push({ id, bank, name, network, feeNote, foreignFee, overseasRate, domesticRate, note, countryRates });
+      saveCustomCards(customs);
+
+      clearCustomForm();
+      mergeCustomCards();
+      renderCustomCardList();
+
+      // Refresh other views
+      const bankSel = document.getElementById("filterBank");
+      if (![...bankSel.options].some(o => o.value === bank)) {
+        const opt = document.createElement("option");
+        opt.value = bank; opt.textContent = bank;
+        bankSel.appendChild(opt);
+      }
+      renderCompareChecks();
+      if (selectedCountry) renderRanking();
+    }
+
+    function deleteCustomCard(id) {
+      const customs = loadCustomCards().filter(c => c.id !== id);
+      saveCustomCards(customs);
+      mergeCustomCards();
+      renderCustomCardList();
+      renderCompareChecks();
+      if (selectedCountry) renderRanking();
+    }
+
+    function clearCustomForm() {
+      document.getElementById("customBank").value = "";
+      document.getElementById("customName").value = "";
+      document.getElementById("customNetwork").value = "Visa";
+      document.getElementById("customFeeNote").value = "免年費";
+      document.getElementById("customForeignFee").value = "1.5";
+      document.getElementById("customOverseasRate").value = "";
+      document.getElementById("customDomesticRate").value = "";
+      document.getElementById("customNote").value = "";
+      document.getElementById("countryRateRows").innerHTML = "";
+    }
+
+    function renderCustomCardList() {
+      const customs = loadCustomCards();
+      const container = document.getElementById("customCardList");
+
+      if (customs.length === 0) {
+        container.innerHTML = `<div class="empty-state"><div class="icon">💳</div><p>尚未新增自訂卡片<br>新增後會自動加入所有排名和比較中</p></div>`;
+        return;
+      }
+
+      container.innerHTML = customs.map(cc => {
+        const networkClass = `network-${cc.network.toLowerCase()}`;
+        const netOverseas = Math.round((cc.overseasRate - cc.foreignFee) * 100) / 100;
+        const countryInfo = (cc.countryRates || []).map(cr => {
+          const country = rewardsData.countries.find(c => c.code === cr.code);
+          const cName = country ? country.name : cr.code;
+          return `${cName} ${cr.rate}%`;
+        }).join("、");
+
+        return `
+        <div class="custom-card-item">
+          <div class="card-main">
+            <h3>${cc.bank} ${cc.name}
+              <span class="card-network ${networkClass}">${cc.network}</span>
+              <span class="custom-badge">自訂</span>
+            </h3>
+            <div class="card-stats">
+              <span>海外 <span class="stat-value">${cc.overseasRate}%</span> (淨 ${netOverseas}%)</span>
+              <span>國內 <span class="stat-value">${cc.domesticRate}%</span></span>
+              <span>手續費 ${cc.foreignFee}%</span>
+              <span>年費 ${cc.feeNote}</span>
+            </div>
+            ${countryInfo ? `<div style="font-size:0.85rem;color:#0f3460;margin-top:0.4rem;">特定國家：${countryInfo}</div>` : ""}
+            ${cc.note ? `<div style="font-size:0.85rem;color:#888;margin-top:0.3rem;">${cc.note}</div>` : ""}
+          </div>
+          <button class="btn-danger" onclick="deleteCustomCard('${cc.id}')">刪除</button>
+        </div>`;
+      }).join("");
+    }
+
+    // Load data on start
+    loadData();
+  </script>
+</body>
+</html>
